@@ -6,6 +6,7 @@
     <modules>
         <module>basic</module>
         <module>designpattern</module>
+        <module>mysql</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

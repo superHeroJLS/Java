@@ -1,0 +1,19 @@
+-- 日期函数的使用
+-- 当月最后一天
+select LAST_DAY(CURDATE());
+
+-- 当月第一天
+SELECT DATE_ADD(CURDATE(), INTERVAL -DAY(CURDATE())+1 DAY);
+
+-- 当前日期减去一个月
+SELECT DATE_ADD(CURDATE(), INTERVAL -1 MONTH);
+-- 上个月最后一天
+SELECT LAST_DATA(DATE_ADD(CURDATE(), INTERVAL -1 MONTH));
+
+
+-- 当前日期减去一个月
+select DATE_ADD(CURDATE(), INTERVAL -1 MONTH);
+-- 当前日期减去一个月之后的日期，这个日期在上个月的天数
+select DAY(DATE_ADD(CURDATE(), INTERVAL -1 MONTH ));
+-- 上个月第一天日期
+select DATE_ADD(DATE_ADD(CURDATE(), INTERVAL -1 MONTH), INTERVAL -DAY(DATE_ADD(CURDATE(), INTERVAL -1 MONTH ))+1 DAY);
