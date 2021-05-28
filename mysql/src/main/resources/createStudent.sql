@@ -8,7 +8,7 @@ CREATE TABLE test.`student_info` (
     login TIMESTAMP
 );
 
-INSERT INTO test.`student` values
+INSERT INTO test.`student_info` values
 (1, 'Dany', 1, 25, 'F', 160, timestamp('2021-09-10')),
 (2, 'Green  ', 1, 23, 'F', 160, timestamp('2021-08-10')),
 (3, 'Henry', 1, 24, 'M', 180, timestamp('2021-07-10')),
