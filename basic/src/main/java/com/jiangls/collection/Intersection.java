@@ -27,30 +27,30 @@ public class Intersection {
         List<Thread> threadList = new ArrayList<>(20);
 
         // 使用多线程生成集合元素
-        for(int i = 0; i < 10; i++) {
-            threadList.add(new MyThread(i, ca, "coll"));
-            threadList.add(new MyThread(i+8, cb, "coll"));
+//        for(int i = 0; i < 10; i++) {
+//            threadList.add(new MyThread(i, ca, "coll"));
+//            threadList.add(new MyThread(i+8, cb, "coll"));
+//        }
+//        // 线程start
+//        threadList.forEach(t -> t.start());
+//        // main线程在所有生成元素线程之后运行
+//        threadList.forEach(t -> {
+//            try {
+//                t.join();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        });
+        for(int i = 0; i < 1000000; i++) {
+            ca.add("coll" + i);
         }
-        // 线程start
-        threadList.forEach(t -> t.start());
-        // main线程在所有生成元素线程之后运行
-        threadList.forEach(t -> {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-//        for(int i = 0; i < 100000; i++) {
-//            ca.add("coll" + i);
-//        }
-//        for(int i = 80000; i < 180000; i++) {
-//            cb.add("coll" + i);
-//        }
+        for(int i = 800000; i < 1800000; i++) {
+            cb.add("coll" + i);
+        }
 
         Long starTime = System.currentTimeMillis();
 
-        // 使用intersection求2个集合（10万数据量，2万交集数据）交集，需要220ms左右
+        // 使用intersection求2个集合（100万数据量，20万交集数据）交集，需要2345ms左右
         intersectionCollection = Intersection.intersection(ca, cb);
 
         // 使用retainAll求2个集合（10万数据量，2万交集数据）交集，需要55203ms左右
