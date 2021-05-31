@@ -99,4 +99,5 @@ class MyThread<E> extends Thread {
             collection.add((E)(e.toString() + i.intValue()));
         }
     }
+
 }
