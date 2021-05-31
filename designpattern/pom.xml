@@ -11,5 +11,11 @@
 
     <artifactId>designpattern</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+    </dependencies>
 </project>
