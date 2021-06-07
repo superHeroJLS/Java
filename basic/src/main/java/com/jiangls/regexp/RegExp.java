@@ -11,7 +11,7 @@ public class RegExp {
         List<String> idList = Arrays.asList("a2212328801348459e6144221a705330", "92bb79cc5774481ea3a05eed599b3796");
 
         for(String id : idList) {
-            String reg = "<img[\\W]*src=[\'\"][a-zA-Z0-9/]+\\?id=" + id + "[\'\"]>";
+            String reg = "<img src=[\'\"][a-zA-Z0-9/]+[?]id=" + id + "[\'\"]>";
             String replacement = "<img src='cid:" + id + "'>";
             source = source.replaceAll(reg, replacement);
         }
