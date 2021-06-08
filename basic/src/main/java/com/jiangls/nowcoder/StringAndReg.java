@@ -24,13 +24,17 @@ public class StringAndReg {
         String input = in.nextLine();
         String[] StrArray = input.split(" ");
         AtomicInteger count = new AtomicInteger();
+
         final Pattern nonAlphabetPattern = Pattern.compile("[^a-zA-Z]");
         final Pattern openSyllablePattern = Pattern.compile("[^aeiou][aeiou][^aeiour][e]");
+
         Arrays.stream(StrArray).forEach(str -> {
             // 纯字母字符串反转
             if (!nonAlphabetPattern.matcher(str).find()) {
                 StringBuffer stringBuffer = new StringBuffer(str);
                 String inputReversed = stringBuffer.reverse().toString();
+
+                // 字符串长度大于4，从0开始递增4个字符串匹配正则表达式
                 if (inputReversed.length() >= 4) {
                     for(int i = 0; i < inputReversed.length() - 4 + 1; i++) {
                         String subStr = inputReversed.substring(i, i+4);
