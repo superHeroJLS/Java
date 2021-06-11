@@ -1,8 +1,8 @@
 package com.jiangls.webdevelopment.webmvc.controller;
 
-import com.itranswarp.learnjava.bean.User;
-import com.itranswarp.learnjava.framework.GetMapping;
-import com.itranswarp.learnjava.framework.ModelAndView;
+import com.jiangls.webdevelopment.webmvc.bean.User;
+import com.jiangls.webdevelopment.webmvc.framework.GetMapping;
+import com.jiangls.webdevelopment.webmvc.framework.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 

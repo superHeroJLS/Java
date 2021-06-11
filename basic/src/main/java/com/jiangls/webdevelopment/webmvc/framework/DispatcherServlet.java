@@ -2,8 +2,8 @@ package com.jiangls.webdevelopment.webmvc.framework;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itranswarp.learnjava.controller.IndexController;
-import com.itranswarp.learnjava.controller.UserController;
+import com.jiangls.webdevelopment.webmvc.controller.IndexController;
+import com.jiangls.webdevelopment.webmvc.controller.UserController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -143,15 +143,13 @@ public class DispatcherServlet extends HttpServlet {
 		pw.flush();
 	}
 
-//	private static final Set<Class<?>> supportedGetParameterTypes = Set.of(int.class, long.class, boolean.class,
-//			String.class, HttpServletRequest.class, HttpServletResponse.class, HttpSession.class);
-	private static final Set<Class<?>> supportedGetParameterTypes = new HashSet<>(Arrays.asList(new Class[]{int.class, long.class, boolean.class,
-			String.class, HttpServletRequest.class, HttpServletResponse.class, HttpSession.class}));
+	private static final Set<Class<?>> supportedGetParameterTypes = new HashSet<>();
+//	private static final Set<Class<Object>> supportedGetParameterTypes = new HashSet<>(Arrays.asList(new Class[]{int.class, long.class, boolean.class,
+//			String.class, HttpServletRequest.class, HttpServletResponse.class, HttpSession.class}));
 
-//	private static final Set<Class<?>> supportedPostParameterTypes = Set.of(HttpServletRequest.class,
-//			HttpServletResponse.class, HttpSession.class);
-	private static final Set<Class<?>> supportedPostParameterTypes = new HashSet<>(Arrays.asList(new Class[]{HttpServletRequest.class,
-		HttpServletResponse.class, HttpSession.class}));
+	private static final Set<Class<?>> supportedPostParameterTypes = new HashSet<>();
+//	private static final Set<Class<Object>> supportedPostParameterTypes = new HashSet<>(Arrays.asList(new Class[]{HttpServletRequest.class,
+//		HttpServletResponse.class, HttpSession.class}));
 }
 
 abstract class AbstractDispatcher {
