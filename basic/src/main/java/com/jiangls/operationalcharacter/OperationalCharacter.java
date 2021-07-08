@@ -16,6 +16,10 @@ import javax.sound.midi.Soundbank;
 public class OperationalCharacter {
 
     public static void main(String[] args) {
+        priorityOfAndEqual();
+    }
+
+    public static void priorityOfAnd() {
         // 小括号中的运算符优先级高于小括号外的运算符
         String s1 = "";
         String s2 = "s2";
@@ -25,7 +29,6 @@ public class OperationalCharacter {
         System.out.println((s1 = s2) == s1);
         System.out.println((s1 = s2).equals("s2"));
     }
-
 
     /**
      * 运算符等于号，三元运算符的优先级高于 "=" 号
@@ -37,5 +40,16 @@ public class OperationalCharacter {
         s1 = s2 = true ? "true" : "false";
         System.out.println(s1);
         System.out.println(s2);
+    }
+
+    private static final int NEW = 1;
+    /**
+     * ==运算符优先级高于&&
+     */
+    public static void priorityOfAndEqual() {
+        Boolean ran = true;
+        int s = 1;
+
+        System.out.println(ran && s == NEW);
     }
 }
