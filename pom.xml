@@ -8,6 +8,7 @@
         <module>designpattern</module>
         <module>mysql</module>
         <module>spring</module>
+        <module>jvm</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
