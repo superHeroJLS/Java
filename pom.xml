@@ -9,6 +9,7 @@
         <module>mysql</module>
         <module>spring</module>
         <module>jvm</module>
+        <module>redisgraph</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
