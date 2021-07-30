@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 图数据库介绍：https://www.yuque.com/jiangls/arv5iw/nevpfg
+ *
  * @Author jiangls
  * @Date 2021/7/29
  */
