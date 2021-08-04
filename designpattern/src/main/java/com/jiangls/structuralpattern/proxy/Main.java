@@ -1,7 +1,7 @@
 package com.jiangls.structuralpattern.proxy;
 
-import structuralpattern.proxy.pool.LazyDataSource;
-import structuralpattern.proxy.pool.PooledDataSource;
+import com.jiangls.structuralpattern.proxy.pool.LazyDataSource;
+import com.jiangls.structuralpattern.proxy.pool.PooledDataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
