@@ -53,8 +53,8 @@ public class StaticInnerClassTest {
     /**
      * <ol>
      *     <li>static内部类可以定义实例变量、static变量、常量、实例方法、static方法</li>
-     *     <li>static内部类变量可以访问外部类静态变量和常量</li>
-     *     <li>stati内部类方法可以访问外部类静态变量、常量、静态方法</li>
+     *     <li>static内部类变量可以访问外部类静态变量、常量、实例变量</li>
+     *     <li>stati内部类方法可以访问外部类静态变量、常量、静态方法、实例变量、实例方法</li>
      * </ol>
      */
     static class StaticInnerClass {
@@ -62,12 +62,15 @@ public class StaticInnerClassTest {
         static String iss = "ss";
         private static final String ISFS = "isfs";
 
-        String is2 = oss;
-        String is3 = OSFS;
+        String is2 = new StaticInnerClassTest().os;
+        String is3 = oss;
+        String is4 = OSFS;
 
+        static String iss1 = new StaticInnerClassTest().os;
         static String iss2 = oss;
         static String iss3 = OSFS;
 
+        static final String ISFS1 = new StaticInnerClassTest().os;
         static final String ISFS2 = oss;
         static final String ISFS3 = OSFS;
 
@@ -83,9 +86,9 @@ public class StaticInnerClassTest {
             System.out.println(iss);
             System.out.println(ISFS);
 
-            // 不能调用外部类实例变量和实例方法
-//            ma();
-//            System.out.println(s);
+            // 调用外部类实例变量和实例方法
+            new StaticInnerClassTest().ma();
+            System.out.println(new StaticInnerClassTest().os);
         }
 
         protected static void sim() {
@@ -97,6 +100,10 @@ public class StaticInnerClassTest {
             // 调用自身的static变量和常量
             System.out.println(iss);
             System.out.println(ISFS);
+
+            // 调用外部类实例变量和实例方法
+            System.out.println(new StaticInnerClassTest().os);
+            new StaticInnerClassTest().ma();
 
         }
     }
