@@ -63,7 +63,7 @@ public class JedisTest {
         try {
             jedis.set("jedisPoolKey", "jedisPoolVal", new SetParams().ex(60L));
         } finally {
-            pool.returnResource(jedis);
+            jedis.close();
             JedisUtil.closeJedisPool(pool);
         }
     }
