@@ -11,6 +11,7 @@
         <module>jvm</module>
         <module>redisgraph</module>
         <module>redis</module>
+        <module>datastructure-and-algorithm</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
