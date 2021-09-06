@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @Date 2021/9/3
  */
 public class SequentialList<T> {
-    protected Object[] element;
+    protected Object[] elements;
     protected int len;
 
     /**
@@ -18,7 +18,7 @@ public class SequentialList<T> {
      * @param length
      */
     public SequentialList(int length) {
-        element = new Object[length];
+        elements = new Object[length];
         this.len = 0;
     }
 
@@ -30,7 +30,7 @@ public class SequentialList<T> {
     }
 
     public SequentialList(T[] values) {
-        this.element = values;
+        this.elements = values;
         this.len = values.length;
     }
 
@@ -53,14 +53,14 @@ public class SequentialList<T> {
 
     public T get(int i) {
         if (i > 0 && i < this.len) {
-            return (T) element[i];
+            return (T) elements[i];
         }
         return null;
     }
 
     public void set(int i, T ele) {
         if (i > 0 && i < this.len) {
-            this.element[i] = ele;
+            this.elements[i] = ele;
         } else {
             throw new IndexOutOfBoundsException(i+"");
         }
@@ -69,8 +69,70 @@ public class SequentialList<T> {
     @Override
     public String toString() {
         return "SequentialList{" +
-                "element=" + Arrays.toString(element) +
+                "element=" + Arrays.toString(elements) +
                 '}';
+    }
+
+    /**
+     * 插入ele作为第i个元素，返回ele元素的下标
+     *
+     * @param i
+     * @param ele
+     * @return ele元素下标
+     */
+    public int insert(int i, T ele) {
+        // 下标越界
+        if(i < 0) {
+            throw new IndexOutOfBoundsException(i+"");
+        }
+        // i大于数组中元素个数，ele插入在元素最后
+        if(i > this.len) {
+            i = this.len;
+        }
+
+        Object[] sourceElements = this.elements;
+        // 数组已满，数组扩容
+        if (this.len == elements.length) {
+            this.elements = new Object[elements.length * 2];
+            // 复制i-1个元素到新数组中
+            for (int j = 0; j < i; j++) {
+                this.elements[j] = sourceElements[j];
+            }
+        }
+
+        // 从i开始至表尾的元素向后移动一位
+        for (int j = i; j < this.len; j++) {
+            this.elements[j+1] = sourceElements[j];
+        }
+
+        this.elements[i] = ele;
+        this.len++;
+        return i;
+    }
+
+    public T remove(int i) {
+        T eleRemoved = null;
+        // 下标越界
+        if (i < 0 || i > elements.length) {
+            throw new IndexOutOfBoundsException(i+"");
+        }
+
+        // 下标超过数组中元素个数
+        if (i > this.len-1) {
+            return eleRemoved;
+        }
+
+        eleRemoved = (T) this.elements[i];
+        // 从下标i+1开始，元素向前移动一位
+        for (int j = i; j < this.len - 1; j++) {
+            this.elements[j] = this.elements[j+1];
+        }
+
+        // 设置数组中最后一个元素为null，释放原引用实例
+        this.elements[this.len-1] = null;
+        this.len--;
+
+        return eleRemoved;
     }
 
 
