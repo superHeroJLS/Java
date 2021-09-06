@@ -110,6 +110,11 @@ public class SequentialList<T> {
         return i;
     }
 
+    /**
+     * 删除下标为i的元素，返回被删除的元素
+     * @param i
+     * @return
+     */
     public T remove(int i) {
         T eleRemoved = null;
         // 下标越界
