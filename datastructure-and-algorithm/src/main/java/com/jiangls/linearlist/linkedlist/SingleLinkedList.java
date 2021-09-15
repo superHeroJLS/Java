@@ -1,5 +1,7 @@
 package com.jiangls.linearlist.linkedlist;
 
+import java.util.Objects;
+
 /**
  * 线性表的单向链实现，简称为单链表
  * @Author jiangls
@@ -8,7 +10,7 @@ package com.jiangls.linearlist.linkedlist;
 public class SingleLinkedList<T> {
 
     // 头结点，不保存数据
-    protected Node<T> head;
+    public Node<T> head;
 
     /**
      * 构造空单链表
@@ -79,7 +81,80 @@ public class SingleLinkedList<T> {
         p.data = data;
     }
 
+    /**
+     * 插入data作为第i个元素，返回插入节点。对序号i采取容错措施：i<0，插在链表最前面，i>n，插入在链表最后面
+     * @param i
+     * @param data
+     * @return
+     */
+    public Node<T> insert(int i, T data) {
+        // p指向头节点
+        Node<T> p = this.head;
+        for(int j = 0; p.next != null && j < i; j++) {
+            p = p.next;
+        }
+        p.next = new Node<>(data, p.next);
 
+        return p.next;
+    }
+
+    /**
+     * 删除链表第i个元素，返回被删除的元素。若i越界返回null
+     * @param i
+     * @return
+     */
+    public T remove(int i) {
+        if (i < 0 || i > size()) {
+            return null;
+        }
+
+        // 第i-1个元素
+        Node<T> prev = this.head;
+        for (int j = 0; j < i - 1; j++) {
+            prev = prev.next;
+        }
+        // 第i个元素
+        Node<T> current = prev.next;
+
+        // 删除第i个元素
+        prev.next = prev.next.next;
+
+        return current.data;
+    }
+
+    public Node<T> search(T data) {
+        for(Node<T> p = this.head.next; p != null; p = p.next) {
+            if (data.equals(p.data)) {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Node<T> p = this.head.next;
+        Node<T> q = ((SingleLinkedList<T>)o).head.next;
+
+        while (p != null && q != null && p.data.equals(q.data)) {
+            p = p.next;
+            q = q.next;
+        }
+
+        return p == null && q == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this);
+    }
 
     /**
      * 单链表节点类
