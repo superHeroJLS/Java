@@ -90,12 +90,15 @@ public class DoubleLinkedList<T> {
     public Node<T> insert(int i, T data) {
         // p指向头节点
         Node<T> p = this.head;
-//        for(int j = 0; p.next != null && j < i; j++) {
-//            p = p.next;
-//        }
-//        p.next = new Node<>(data, p.next);
+        for(int j = 0; p.next != null && j < i; j++) {
+            p = p.next;
+        }
 
-        return p.next;
+        Node<T> q = new Node<>(p.prev, data, p);
+        p.prev.next = q;
+        p.prev = q;
+
+        return q;
     }
 
     /**
@@ -108,18 +111,17 @@ public class DoubleLinkedList<T> {
             return null;
         }
 
-        // 第i-1个元素
-        Node<T> prev = this.head;
-        for (int j = 0; j < i - 1; j++) {
-            prev = prev.next;
-        }
         // 第i个元素
-        Node<T> current = prev.next;
+        Node<T> p = this.head;
+        for (int j = 0; j < i; j++) {
+            p = p.next;
+        }
 
         // 删除第i个元素
-        prev.next = prev.next.next;
+        p.prev.next = p.next;
+        p.next.prev = p.prev;
 
-        return current.data;
+        return p.data;
     }
 
     public Node<T> search(T data) {
