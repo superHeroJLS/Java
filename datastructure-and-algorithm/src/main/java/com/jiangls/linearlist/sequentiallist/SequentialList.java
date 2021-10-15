@@ -140,5 +140,9 @@ public class SequentialList<T> {
         return eleRemoved;
     }
 
+    public int getLen() {
+        return this.len;
+    }
+
 
 }

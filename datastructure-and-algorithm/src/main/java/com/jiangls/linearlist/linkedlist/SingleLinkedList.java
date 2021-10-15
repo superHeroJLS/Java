@@ -20,16 +20,25 @@ public class SingleLinkedList<T> {
     }
 
     /**
-     * 尾插法构造单链表
+     * 构造单链表
      * @param datas 数据
      */
     public SingleLinkedList(T[] datas) {
         this();
-        if (datas != null) {
+
+        // 尾插法构造单链表
+        /*if (datas != null) {
             Node rear = this.head;
             for(int i = 0; i < datas.length; i++) {
                 rear.next = new Node(datas[i], null);
                 rear = rear.next;
+            }
+        }*/
+
+        // 头插法构造单链表
+        if (datas != null) {
+            for(int i = 0; i < datas.length; i++) {
+                this.head.next = new Node<>(datas[i], this.head.next);
             }
         }
     }
@@ -115,6 +124,9 @@ public class SingleLinkedList<T> {
         }
         // 第i个元素
         Node<T> current = prev.next;
+        if (current == null) {
+            return null;
+        }
 
         // 删除第i个元素
         prev.next = prev.next.next;
@@ -179,5 +191,7 @@ public class SingleLinkedList<T> {
             return this.data.toString();
         }
     }
+
+
 
 }
