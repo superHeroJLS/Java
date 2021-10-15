@@ -66,7 +66,7 @@ public class SingleLinkedList<T> {
     }
 
     /**
-     * 设置第i个节点，若越界抛出异常异常
+     * 设置第i个元素的值，若越界抛出异常异常
      */
     public void set(int i, T data) {
         if(i < 0 || i > size()) {
