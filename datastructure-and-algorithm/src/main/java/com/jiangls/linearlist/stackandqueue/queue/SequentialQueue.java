@@ -17,8 +17,6 @@ package com.jiangls.linearlist.stackandqueue.queue;
  *         https://www.icourse163.org/learn/ZZU-1207193805?tid=1461941470#/learn/content?type=detail&id=1238766411&cid=1259545391
  *     </a>
  * </p>
- *
- * <a></a>
  * @Author jiangls
  * @Date 2021/10/15
  */
