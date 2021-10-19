@@ -5,7 +5,7 @@
  * is not allowed to be distributed or copied without the license from
  * GantSoftware.Co.Ltd. Please contact the company for more information.
  */
-package com.jiangls.linearlist.stackandqueue.queue;
+package com.jiangls.stackandqueue.queue;
 
 /**
  * <p>队列的顺序存储结构称为顺序队列。和顺序表一样，顺序队列用一个数组空间存放当前队列元素。</p>

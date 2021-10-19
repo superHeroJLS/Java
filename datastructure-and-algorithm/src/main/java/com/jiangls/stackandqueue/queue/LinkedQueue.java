@@ -5,7 +5,7 @@
  * is not allowed to be distributed or copied without the license from
  * GantSoftware.Co.Ltd. Please contact the company for more information.
  */
-package com.jiangls.linearlist.stackandqueue.queue;
+package com.jiangls.stackandqueue.queue;
 
 /**
  * <p>队列是特殊的线性表，只考虑对线性表2端操作的情况，且只能在一端插入另一端删除；

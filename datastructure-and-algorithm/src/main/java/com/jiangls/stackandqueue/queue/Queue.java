@@ -5,7 +5,7 @@
  * is not allowed to be distributed or copied without the license from
  * GantSoftware.Co.Ltd. Please contact the company for more information.
  */
-package com.jiangls.linearlist.stackandqueue.queue;
+package com.jiangls.stackandqueue.queue;
 
 /**
  * @Author jiangls
