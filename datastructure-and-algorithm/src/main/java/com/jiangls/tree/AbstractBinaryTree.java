@@ -1,7 +1,7 @@
 package com.jiangls.tree;
 
 /**
- * 二叉树接口
+ * 二叉树抽象类
  * @Author jiangls
  * @Date 2021/10/20
  */
@@ -35,14 +35,28 @@ public interface AbstractBinaryTree<T> {
     void postOrder();
 
     /**
-     * 查找并返回首次出现的关键字key元素结点
-     */
-    BinaryNode<T> search(T key);
-
-    /**
      * 返回node父结点
      */
     BinaryNode<T> getParent(BinaryNode<T> node);
+
+    /**
+     * 返回左结点
+     * @param node
+     * @return
+     */
+    BinaryNode<T> getLeft(BinaryNode<T> node);
+
+    /**
+     * 返回右结点
+     * @param node
+     * @return
+     */
+    BinaryNode<T> getRight(BinaryNode<T> node);
+
+    /**
+     * 查找并返回首次出现的关键字key元素结点
+     */
+    BinaryNode<T> search(T key);
 
     /**
      * 插入根结点
