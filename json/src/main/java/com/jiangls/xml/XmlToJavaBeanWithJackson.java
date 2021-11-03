@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 /**
  * <p>XML文档解析成一个JavaBean</p>
- * 一个名叫Jackson的开源的第三方库可以轻松做到XML到JavaBean的转换。我们要使用Jackson，先添加Maven的依赖：
+ * 使用<b>Jackson</b>这个开源第三方库可以轻松做到XML到JavaBean的转换。我们要使用<b>Jackson</b>，先添加Maven的依赖：
  * <ol>
  *     <li>com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.10.1</li>
  * </ol>
