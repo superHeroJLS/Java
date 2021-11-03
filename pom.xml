@@ -12,6 +12,7 @@
         <module>redisgraph</module>
         <module>redis</module>
         <module>datastructure-and-algorithm</module>
+        <module>json</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
