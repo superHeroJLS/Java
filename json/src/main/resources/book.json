@@ -6,5 +6,7 @@
     "lastName": "Xyz"
   },
   "isbn": "1234567",
-  "tags": ["Java", "Network"]
+  "tags": ["Java", "Network"],
+  "pubDate": "2016-09-01",
+  "isbn2": "978-7-111-54742-6"
 }
