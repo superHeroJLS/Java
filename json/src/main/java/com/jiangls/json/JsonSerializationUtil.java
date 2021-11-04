@@ -9,13 +9,17 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * <p>JSON序列化和反序列化工具</p>
- * 参考链接：https://www.liaoxuefeng.com/wiki/1252599548343744/1320418650619938
+ * <p>
+ *     JSON序列化和反序列化工具，参考链接：https://www.liaoxuefeng.com/wiki/1252599548343744/1320418650619938
+ * </p><br/>
  *
- * <p>JSON是轻量级的数据表示方式，常用于Web应用；</p>
- * <p>Jackson可以实现JavaBean和JSON之间的转换；</p>
- * <p>可以通过Module扩展Jackson能处理的数据类型；</p>
- * <p>可以自定义JsonSerializer和JsonDeserializer来定制序列化和反序列化。</p>
+ * <ul>
+ *     <li>JSON是轻量级的数据表示方式，常用于Web应用；</li>
+ *     <li>Jackson可以实现JavaBean和JSON之间的转换；</li>
+ *     <li>可以通过Module扩展Jackson能处理的数据类型；</li>
+ *     <li>可以自定义JsonSerializer和JsonDeserializer来定制序列化和反序列化。</li>
+ * </ul>
+ *
  *
  */
 public class JsonSerializationUtil {
