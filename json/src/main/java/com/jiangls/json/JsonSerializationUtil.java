@@ -2,6 +2,7 @@ package com.jiangls.json;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jiangls.json.javabean.Book;
 import com.jiangls.json.jsondeserializer.IsbnDeserializer;
@@ -38,16 +39,25 @@ public class JsonSerializationUtil {
         InputStream input = JsonSerializationUtil.class.getResourceAsStream("/book.json");
 
         ObjectMapper mapper = new ObjectMapper();
+        // 添加JavaTimeModule模块，使得Jackson支持JSR 310中的Java数据类型，比如LocalDate
         mapper.registerModule(new JavaTimeModule());
-
-        // 反序列化是忽略不存在的JavaBean属性
+        // 反序列化时忽略不存在的JavaBean属性
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        // 序列化时，json字符串有缩进，便于阅读
+        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+
+
+        // 反序列化
         Book book = mapper.readValue(input, Book.class);
+        System.out.println("反序列化JavaBean结果：");
         System.out.println(book.toString());
+        System.out.println();
 
         // 序列化
+        System.out.println("序列化Json字符串结果，Json字符串有缩进：");
         String jsonStr = mapper.writeValueAsString(book);
         System.out.println(jsonStr);
+        System.out.println("----------------------------------------");
     }
 
 
@@ -61,18 +71,23 @@ public class JsonSerializationUtil {
     public static void demoOfDataTypeJsr310() throws IOException {
         InputStream input = JsonSerializationUtil.class.getResourceAsStream("/book.json");
 
-        // 创建ObjectMapper时，注册一个新的JavaTimeModule
         ObjectMapper mapper = new ObjectMapper();
+        // 添加JavaTimeModule模块，使得Jackson支持JSR 310中的Java数据类型，比如LocalDate
         mapper.registerModule(new JavaTimeModule());
-
-        // 反序列化是忽略不存在的JavaBean属性
+        // 反序列化时忽略不存在的JavaBean属性
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        // 反序列化
         Book book = mapper.readValue(input, Book.class);
+        System.out.println("反序列化JavaBean结果：");
         System.out.println(book.toString());
+        System.out.println();
 
         // 序列化
+        System.out.println("序列化Json字符串结果：");
         String jsonStr = mapper.writeValueAsString(book);
         System.out.println(jsonStr);
+        System.out.println("--------------------------------------------------");
     }
 
     /**
@@ -103,14 +118,19 @@ public class JsonSerializationUtil {
         InputStream input = JsonSerializationUtil.class.getResourceAsStream("/book.json");
 
         ObjectMapper mapper = new ObjectMapper();
+        // 添加JavaTimeModule模块，使得Jackson支持JSR 310中的Java数据类型，比如LocalDate
         mapper.registerModule(new JavaTimeModule());
-
-        // 反序列化是忽略不存在的JavaBean属性
+        // 反序列化时忽略不存在的JavaBean属性
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        // 反序列化
         Book book = mapper.readValue(input, Book.class);
+        System.out.println("反序列化JavaBean结果：");
         System.out.println(book.toString());
+        System.out.println();
 
         // 序列化
+        System.out.println("序列化Json字符串结果：");
         String jsonStr = mapper.writeValueAsString(book);
         System.out.println(jsonStr);
     }
