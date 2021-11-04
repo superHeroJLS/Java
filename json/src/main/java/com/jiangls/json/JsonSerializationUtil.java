@@ -1,6 +1,8 @@
 package com.jiangls.json;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -9,6 +11,9 @@ import com.jiangls.json.jsondeserializer.IsbnDeserializer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * <p>
@@ -26,113 +31,173 @@ import java.io.InputStream;
  */
 public class JsonSerializationUtil {
 
-    public static void main(String[] args) throws IOException {
-        demo();
-        demoOfDataTypeJsr310();
-        demoOfIsbnDeserializer();
+    private static ObjectMapper mapper;
+
+    static {
+        mapper = new ObjectMapper();
+
+        // 添加JavaTimeModule模块，使得Jackson支持JSR 310中的Java数据类型，比如LocalDateTime，LocalDate，LocalTime
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        mapper.registerModule(javaTimeModule);
+
+        // 反序列化时忽略不存在的JavaBean属性
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            /*
+            确定在找不到类型的访问器（并且没有注释指示要序列化）时发生的情况的功能。
+            如果启用（默认），将引发异常，以指示这些类型为不可序列化类型；如果禁用，它们将序列化为空对象，即没有任何属性。
+            请注意，此功能仅对那些没有任何可识别注释（如 @JsonSerialize）有效，有注释的类型不会导致抛出异常。
+             */
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        // 设置日期序列化的格式信息
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+
     }
 
     /**
-     * 将json字符串反序列化成java对象，将java对象序列化成json字符串
+     * 序列化对象成字符串
+     * @param obj
+     * @return
      */
-    public static void demo() throws IOException {
-        InputStream input = JsonSerializationUtil.class.getResourceAsStream("/book.json");
+    public static String serializeAsString(Object obj) {
+        String str;
+        try {
+            str = mapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("jackson serialize exception: " + e.getMessage(), e);
+        }
 
-        ObjectMapper mapper = new ObjectMapper();
-        // 添加JavaTimeModule模块，使得Jackson支持JSR 310中的Java数据类型，比如LocalDate
-        mapper.registerModule(new JavaTimeModule());
-        // 反序列化时忽略不存在的JavaBean属性
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // 序列化时，json字符串有缩进，便于阅读
-        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+        return str;
+    }
 
+    /**
+     * 序列化对象成byte数组
+     * @param obj
+     * @return
+     */
+    public static byte[] serializeAsByteArray(Object obj) {
+        byte[] byteArr;
 
-        // 反序列化
-        Book book = mapper.readValue(input, Book.class);
-        System.out.println("反序列化JavaBean结果：");
-        System.out.println(book.toString());
-        System.out.println();
+        try {
+            byteArr = mapper.writeValueAsBytes(obj);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("jackson serialize exception: " + e.getMessage(), e);
+        }
 
-        // 序列化
-        System.out.println("序列化Json字符串结果，Json字符串有缩进：");
-        String jsonStr = mapper.writeValueAsString(book);
-        System.out.println(jsonStr);
-        System.out.println("----------------------------------------");
+        return byteArr;
     }
 
 
     /**
-     * Jackson反序列化特定Java对象，比如LocalDate类型，只需要引入标准的JSR 310关于JavaTime的数据格式定义至Maven<br/>
-     * com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0<br/>
-     *
-     * <b>注意在创建ObjectMapper时，注册一个新的JavaTimeModule</b>
-     * @throws IOException
+     * 字符序列（字符串）反序列化为指定Java类型对象
+     * @param content
+     * @param clazz
+     * @param <T>
+     * @return
      */
-    public static void demoOfDataTypeJsr310() throws IOException {
-        InputStream input = JsonSerializationUtil.class.getResourceAsStream("/book.json");
-
-        ObjectMapper mapper = new ObjectMapper();
-        // 添加JavaTimeModule模块，使得Jackson支持JSR 310中的Java数据类型，比如LocalDate
-        mapper.registerModule(new JavaTimeModule());
-        // 反序列化时忽略不存在的JavaBean属性
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        // 反序列化
-        Book book = mapper.readValue(input, Book.class);
-        System.out.println("反序列化JavaBean结果：");
-        System.out.println(book.toString());
-        System.out.println();
-
-        // 序列化
-        System.out.println("序列化Json字符串结果：");
-        String jsonStr = mapper.writeValueAsString(book);
-        System.out.println(jsonStr);
-        System.out.println("--------------------------------------------------");
+    public static <T> T deserialize(CharSequence content, Class<T> clazz) {
+        T obj = null;
+        try {
+            obj = mapper.readValue(content.toString(), clazz);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return obj;
     }
 
     /**
-     * 有些时候，内置的解析规则和扩展的解析规则如果都不满足我们的需求，<b>还可以自定义解析。</b>
-     * 举个例子，假设Book类的isbn是一个BigInteger
-     * <blockquote><pre>
-     *     public class Book {
-     *          public String name;
-     *          public BigInteger isbn;
-     *      }
-     * </pre></blockquote>
-     *
-     * 但JSON数据并不是标准的整形格式：
-     *<blocckquote><pre>
-     *     {
-     *          "name": "Java核心技术",
-     *          "isbn2": "978-7-111-54742-6"
-     *      }
-     *</pre></blocckquote>
-     *
-     * 直接解析，肯定报错。这时，我们需要<b>自定义一个{@link IsbnDeserializer}，用于解析含有非数字的字符串</b><br/>
-     *
-     * 最后，在{@link Book}类isbn2上使用注解：<b>@JsonDeserialize(using = IsbnDeserializer.class)</b>
-     *
-     * @throws IOException
+     * byte数组反序列化为指定的Java类型对象
+     * @param src
+     * @param clazz
+     * @param <T>
+     * @return
      */
-    public static void demoOfIsbnDeserializer() throws IOException {
-        InputStream input = JsonSerializationUtil.class.getResourceAsStream("/book.json");
-
-        ObjectMapper mapper = new ObjectMapper();
-        // 添加JavaTimeModule模块，使得Jackson支持JSR 310中的Java数据类型，比如LocalDate
-        mapper.registerModule(new JavaTimeModule());
-        // 反序列化时忽略不存在的JavaBean属性
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        // 反序列化
-        Book book = mapper.readValue(input, Book.class);
-        System.out.println("反序列化JavaBean结果：");
-        System.out.println(book.toString());
-        System.out.println();
-
-        // 序列化
-        System.out.println("序列化Json字符串结果：");
-        String jsonStr = mapper.writeValueAsString(book);
-        System.out.println(jsonStr);
+    public static <T> T deserialize(byte[] src, Class<T> clazz) {
+        T obj = null;
+        try {
+            obj = mapper.readValue(src, clazz);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return obj;
     }
 
+    /**
+     * 字符序列（字符串）反序列化成Collection
+     * @param content 字符序列
+     * @param collectionClass Collection类型
+     * @param elementClass Collection中元素类型
+     * @return
+     */
+    public static <T> T deserializeCollection(CharSequence content, Class<? extends Collection> collectionClass, Class<?> elementClass) {
+        JavaType javaType = mapper.getTypeFactory().constructCollectionType(collectionClass, elementClass);
+
+        T obj;
+
+        try {
+            obj = mapper.readValue(content.toString(), javaType);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("jackson deserialize exception: " + e.getMessage(), e);
+        }
+
+        return obj;
+    }
+
+    /**
+     * byte数组反序列化成Collection
+     * @param src byte数组
+     * @param collectionClass Collection类型
+     * @param elementClass Collection中元素类型
+     * @return
+     */
+    public static <T> T deserializeCollection(byte[] src, Class<? extends Collection> collectionClass, Class<?> elementClass) {
+        JavaType javaType = mapper.getTypeFactory().constructCollectionType(collectionClass, elementClass);
+
+        T obj = null;
+
+        try {
+            obj = mapper.readValue(src, javaType);
+        } catch (IOException e) {
+            throw new RuntimeException("jackson deserialize exception: " + e.getMessage(), e);
+        }
+
+        return obj;
+    }
+
+    /**
+     * 字符序列（字符串）反序列化成Map
+     * @param content 字符序列
+     * @param mapClass Map类型
+     * @param keyClass key类型
+     * @param valueClass value类型
+     * @return
+     */
+    public static <T> T deserializeMap(CharSequence content, Class<? extends Map> mapClass, Class<?> keyClass, Class<?> valueClass) {
+        JavaType type = mapper.getTypeFactory().constructMapType(mapClass, keyClass, valueClass);
+        T obj = null;
+        try {
+            obj = mapper.readValue(content.toString(), type);
+        } catch (IOException e) {
+            throw new RuntimeException("jackson deserialize excpetion: " + e.getMessage(), e);
+        }
+        return obj;
+    }
+
+    /**
+     * byte数组反序列化成Map
+     * @param src byte数组
+     * @param mapClass Map类型
+     * @param keyClass key类型
+     * @param valueClass value类型
+     * @return
+     */
+    public static <T> T deserializeMap(byte[] src, Class<? extends Map> mapClass, Class<?> keyClass, Class<?> valueClass) {
+        JavaType type = mapper.getTypeFactory().constructMapType(mapClass, keyClass, valueClass);
+        T obj = null;
+        try {
+            obj = mapper.readValue(src, type);
+        } catch (IOException e) {
+            throw new RuntimeException("jackson deserialize excpetion: " + e.getMessage(), e);
+        }
+        return obj;
+    }
 }
