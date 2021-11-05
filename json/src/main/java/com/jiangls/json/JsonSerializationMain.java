@@ -1,14 +1,22 @@
 package com.jiangls.json;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.jiangls.json.javabean.Book;
+import com.jiangls.json.javabean.Java8DateTimeType;
+import com.jiangls.json.javabean.VariousDateType;
 import com.jiangls.json.jsondeserializer.IsbnDeserializer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * <p>
@@ -22,13 +30,91 @@ import java.io.InputStream;
  *     <li>可以自定义JsonSerializer和JsonDeserializer来定制序列化和反序列化。</li>
  * </ul>
  *
+ * <p>
+ *     java.time.LocalDateTime参考：https://www.liaoxuefeng.com/wiki/1252599548343744/1303871087444002
+ * </p>
+ *
  *
  */
 public class JsonSerializationMain {
     public static void main(String[] args) throws IOException {
-        demo();
-        demoOfDataTypeJsr310();
-        demoOfIsbnDeserializer();
+//        demo();
+//        demoOfDataTypeJsr310();
+//        demoOfIsbnDeserializer();
+
+//        serializeJava8DateTime();
+
+        serializeJava8DateTime();
+    }
+
+    /**
+     * jackson序列化和反序列化java.time.LocalDateTiem<br/><br/>
+     *
+     * maven依赖添加jackson-datatype-jsr310<br/><br/>
+     *
+     * ObjectMapper注册新Module：JavaTimeModule<br/><br/>
+     *
+     * LocalDateTimeSerializer序列化默认格式：2021-11-05T12:47:47.936<br/><br/>
+     *
+     * LocalDateTimeDeserializer反序列化默认格式：2021-11-05T12:47:47.936
+     *
+     * @throws JsonProcessingException
+     */
+    public static void serializeJava8DateTime() throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        // 添加JavaTimeModule模块，使得Jackson支持JSR 310中的Java数据类型，比如LocalDateTime，LocalDate，LocalTime
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        mapper.registerModule(javaTimeModule);
+        // setDateFormat对java.time.LocalDateTime不起作用
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+
+        // 序列化
+        Java8DateTimeType java8DateTimeType = new Java8DateTimeType();
+        java8DateTimeType.setDatetime(LocalDateTime.now());
+        System.out.println(mapper.writeValueAsString(java8DateTimeType)); // {"datetime":"2021-11-05 12:45:24"}
+
+        // 反序列化
+        String json = "{\"datetime\":\"2021-11-05 11:52:13\"}";
+        Java8DateTimeType java8DateTimeType2 = mapper.readValue(json, Java8DateTimeType.class);
+        System.out.println(java8DateTimeType2.toString()); // Java8DateTimeType{date=2021-11-05T11:52:13}
+    }
+
+    /**
+     * 反序列化各种日期类型：
+     * <ol>
+     *     <li>java.util.Date</li>
+     *     <li>java.time.LocalDateTime</li>
+     *     <li>java.util.LocalDate</li>
+     *     <li>java.util.LocalTime</li>
+     * </ol>
+     */
+    public static void deserializeVariousDateType() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        // 添加JavaTimeModule模块，使得Jackson支持JSR 310中的Java数据类型，比如LocalDateTime，LocalDate，LocalTim
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        mapper.registerModule(javaTimeModule);
+
+        // 反序列化时忽略不存在的JavaBean属性
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        /*
+        确定在找不到类型的访问器（并且没有注释指示要序列化）时发生的情况的功能。
+        如果启用（默认），将引发异常，以指示这些类型为不可序列化类型；如果禁用，它们将序列化为空对象，即没有任何属性。
+        请注意，此功能仅对那些没有任何可识别注释（如 @JsonSerialize）有效，有注释的类型不会导致抛出异常。
+         */
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        // 设置日期序列化的格式信息，这个设置对java.time.LocalDateTime不起作用
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+
+        // 读取json文件
+        InputStream input = JsonSerializationUtil.class.getResourceAsStream("/datetype.json");
+
+        // 反序列化
+        VariousDateType dateType = mapper.readValue(input, VariousDateType.class);
+        System.out.println(dateType.getDate().toLocaleString());
+
     }
 
     /**
