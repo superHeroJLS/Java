@@ -1,12 +1,11 @@
 package com.jiangls.json;
 
+import com.ctc.wstx.shaded.msv_core.datatype.xsd.DateType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.jiangls.json.javabean.Book;
 import com.jiangls.json.javabean.Java8DateTimeType;
 import com.jiangls.json.javabean.VariousDateType;
@@ -44,7 +43,8 @@ public class JsonSerializationMain {
 
 //        serializeJava8DateTime();
 
-        serializeJava8DateTime();
+        serializeVariousDateType();
+
     }
 
     /**
@@ -82,7 +82,7 @@ public class JsonSerializationMain {
     }
 
     /**
-     * 反序列化各种日期类型：
+     * 序列化和反序列化各种日期类型：
      * <ol>
      *     <li>java.util.Date</li>
      *     <li>java.time.LocalDateTime</li>
@@ -90,13 +90,12 @@ public class JsonSerializationMain {
      *     <li>java.util.LocalTime</li>
      * </ol>
      */
-    public static void deserializeVariousDateType() throws IOException {
+    public static void serializeVariousDateType() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 
         // 添加JavaTimeModule模块，使得Jackson支持JSR 310中的Java数据类型，比如LocalDateTime，LocalDate，LocalTim
         JavaTimeModule javaTimeModule = new JavaTimeModule();
         mapper.registerModule(javaTimeModule);
-
         // 反序列化时忽略不存在的JavaBean属性
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         /*
@@ -113,8 +112,23 @@ public class JsonSerializationMain {
 
         // 反序列化
         VariousDateType dateType = mapper.readValue(input, VariousDateType.class);
+        System.out.println("deserialize result: ");
         System.out.println(dateType.getDate().toLocaleString());
+        System.out.println(dateType.getLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        System.out.println(dateType.getLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        System.out.println(dateType.getLocalTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 
+        // 序列化
+        String json = mapper.writeValueAsString(dateType);
+        System.err.println("----------------------------------------");
+        System.out.println("serialize result: ");
+        System.out.println(json);
+
+        // 序列化属性全为null的对象
+        String json1 = mapper.writeValueAsString(new VariousDateType());
+        System.err.println("----------------------------------------");
+        System.out.println("serialize result: ");
+        System.out.println(json1);
     }
 
     /**

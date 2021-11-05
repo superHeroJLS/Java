@@ -24,6 +24,16 @@ import java.util.Map;
  *     <li>可以自定义JsonSerializer和JsonDeserializer来定制序列化和反序列化。</li>
  * </ul>
  *
+ * <p>
+ *     对于java.time包下的日期类型，比如LocalDateTime的使用：<br/>
+ *     <blockquote><pre>
+ *\    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+ *\    @JsonSerialize(using = LocalDateTimeSerializer.class)
+ *\    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+ *\    private LocalDateTime localDateTime;
+ *     </pre></blockquote>
+ * </p>
+ *
  *
  */
 public class JsonSerializationUtil {
@@ -45,7 +55,7 @@ public class JsonSerializationUtil {
             请注意，此功能仅对那些没有任何可识别注释（如 @JsonSerialize）有效，有注释的类型不会导致抛出异常。
              */
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        // 设置日期序列化的格式信息
+        // 设置默认日期序列化的格式信息，针对java.util.Date有效
         mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 
     }
