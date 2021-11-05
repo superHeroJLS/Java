@@ -1,6 +1,10 @@
 package com.jiangls.json.javabean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.jiangls.json.jsondeserializer.IsbnDeserializer;
 
 import java.math.BigInteger;
@@ -18,6 +22,9 @@ public class Book {
      * Jackson反序列化特定Java对象，比如LocalDate类型，只需要引入标准的JSR 310关于JavaTime的数据格式定义至Maven
      * com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     public LocalDate pubDate;
 
     @JsonDeserialize(using = IsbnDeserializer.class)
