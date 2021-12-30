@@ -15,13 +15,13 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
 
     // 在执行UserService的每个方法前执行:
-    @Before("execution(public * com.springaop.service.UserService.*(..))")
+    @Before("execution(public * com.jiangls.ioc.annotationconfiguration.springaop.service.UserService.*(..))")
     public void doAccessCheck() {
         System.err.println("[Before] do access check...");
     }
     
     // 在执行MailService的每个方法前后执行:
-    @Around("execution(public * com.springaop.service.MailService.*(..))")
+    @Around("execution(public * com.jiangls.ioc.annotationconfiguration.springaop.service.MailService.*(..))")
     public Object doLogging(ProceedingJoinPoint pjp) throws Throwable {
         System.err.println("[Around] start " + pjp.getSignature());
         Object retVal = pjp.proceed();// 调用真正的业务方法
