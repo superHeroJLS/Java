@@ -44,6 +44,7 @@ public class SequentialBinaryTreeGeneric<T extends BinaryTreeNode<E>, E> impleme
         if (this.count() == 0) {
             return 0;
         } else {
+            // 通过对数的换底公式计算二叉树的高度
             return Double.valueOf(Math.log(this.count()) / Math.log(2)).intValue();
         }
     }
