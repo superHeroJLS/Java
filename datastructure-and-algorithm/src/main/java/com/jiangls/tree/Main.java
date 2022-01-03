@@ -17,7 +17,7 @@ public class Main {
 
 
         // 测试BinaryTreeGeneric的泛型是否合适
-//        BinaryTreeGeneric<BinaryTreeNode<String>, String> bt = new BinaryTreeGeneric<>();
+//        LinkedBinaryTreeGeneric<BinaryTreeNode<String>, String> bt = new LinkedBinaryTreeGeneric<>();
 //        bt.setRoot(new BinaryTreeNode<>("root"));
 //
 //        System.out.println(bt.height());

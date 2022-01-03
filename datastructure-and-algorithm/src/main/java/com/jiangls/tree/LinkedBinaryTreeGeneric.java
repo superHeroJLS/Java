@@ -1,19 +1,19 @@
 package com.jiangls.tree;
 
 /**
- * 二叉树类型，类定义的时候就确定了类型，不再用泛型定义
+ * 二叉树链式存储实现类型，带有泛型
  *
  * @author Jiangls
  * @date 2022/1/3
  */
-public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Object> {
+public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements AbstractBinaryTree<N, E> {
 
-    private BinaryTreeNode<Object> root;
+    private N root;
 
     /**
      * 构造空二叉树
      */
-    public BinaryTree() {
+    public LinkedBinaryTreeGeneric() {
         this.root = null;
     }
 
@@ -21,19 +21,19 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
      * 构造只有根结点的二叉树
      * @param rootData
      */
-    public BinaryTree(Object rootData) {
+    public LinkedBinaryTreeGeneric(E rootData) {
         this(rootData, null, null);
     }
 
-    public BinaryTree(Object rootData, BinaryTreeNode<Object> lchild, BinaryTreeNode<Object> rchild) {
-        this.root = new BinaryTreeNode(rootData, lchild, rchild);
+    public LinkedBinaryTreeGeneric(E rootData, N lchild, N rchild) {
+        this.root = (N) new BinaryTreeNode(rootData, lchild, rchild);
     }
 
-    public BinaryTreeNode<Object> getRoot() {
+    public N getRoot() {
         return root;
     }
 
-    public void setRoot(BinaryTreeNode<Object> root) {
+    public void setRoot(N root) {
         this.root = root;
     }
 
@@ -44,7 +44,7 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
 
     @Override
     public int count() {
-        return 0;
+        return this.count(this.root);
     }
 
     /**
@@ -52,15 +52,15 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
      * @param node
      * @return
      */
-    private int count(BinaryTreeNode<Object> node) {
+    private int count(N node) {
         // 递归边界
         if (node == null) {
             return 0;
         }
 
         // 递推公式
-        int lcount = this.count(node.getLchild());
-        int rcount = this.count(node.getRchild());
+        int lcount = this.count((N) node.getLchild());
+        int rcount = this.count((N) node.getRchild());
         return 1 + lcount + rcount;
 
     }
@@ -75,15 +75,15 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
      * @param node
      * @return
      */
-    private int height(BinaryTreeNode<Object> node) {
+    private int height(N node) {
         // 递归边界
         if (node == null) {
             return 0;
         }
 
         // 递推公式
-        int lheight = this.height(node.getLchild());
-        int rheight = this.height(node.getRchild());
+        int lheight = this.height((N) node.getLchild());
+        int rheight = this.height((N) node.getRchild());
 
         return lheight > rheight ? 1 + lheight : 1 + rheight;
     }
@@ -97,11 +97,11 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
      * 递归前序遍历
      * @param node
      */
-    private void preOrder(BinaryTreeNode<Object> node) {
+    private void preOrder(N node) {
         if (node != null) {
             System.out.print(node.getData().toString() + " ");
-            this.preOrder(node.getLchild());
-            this.preOrder(node.getRchild());
+            this.preOrder((N) node.getLchild());
+            this.preOrder((N) node.getRchild());
         }
     }
 
@@ -114,11 +114,11 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
      * 递归中序遍历
      * @param node
      */
-    private void inOrder(BinaryTreeNode<Object> node) {
+    private void inOrder(N node) {
         if (node != null) {
-            this.inOrder(node.getLchild());
+            this.inOrder((N) node.getLchild());
             System.out.print(node.getData().toString() + " ");
-            this.inOrder(node.getRchild());
+            this.inOrder((N) node.getRchild());
         }
     }
 
@@ -131,16 +131,16 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
      * 递归后序遍历
      * @param node
      */
-    private void postOrder(BinaryTreeNode<Object> node) {
+    private void postOrder(N node) {
         if (node != null) {
-            this.inOrder(node.getLchild());
-            this.inOrder(node.getRchild());
+            this.inOrder((N) node.getLchild());
+            this.inOrder((N) node.getRchild());
             System.out.print(node.getData().toString() + " ");
         }
     }
 
     @Override
-    public BinaryTreeNode<Object> getParent(BinaryTreeNode<Object> node) {
+    public N getParent(N node) {
         if (this.root == null || node == null || node == this.root) {
             return null;
         }
@@ -154,7 +154,7 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
      * @param node
      * @return
      */
-    private BinaryTreeNode<Object> getParent(BinaryTreeNode<Object> p, BinaryTreeNode<Object> node) {
+    private N getParent(N p, N node) {
         if (p == null || node == null) {
             return null;
         }
@@ -163,26 +163,26 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
             return p;
         }
 
-        BinaryTreeNode<Object> findP = this.getParent(p.getLchild(), node);
+        BinaryTreeNode<E> findP = this.getParent((N) p.getLchild(), node);
         if (findP == null) {
-            return this.getParent(p.getRchild(), node);
+            return this.getParent((N) p.getRchild(), node);
         }
 
-        return findP;
+        return (N) findP;
     }
 
     @Override
-    public BinaryTreeNode<Object> getLeft(BinaryTreeNode<Object> node) {
-        return node.getLchild();
+    public N getLeft(N node) {
+        return (N) node.getLchild();
     }
 
     @Override
-    public BinaryTreeNode<Object> getRight(BinaryTreeNode<Object> node) {
-        return node.getRchild();
+    public N getRight(N node) {
+        return (N) node.getRchild();
     }
 
     @Override
-    public BinaryTreeNode<Object> search(Object key) {
+    public N search(E key) {
         return this.search(this.root, key);
     }
 
@@ -194,7 +194,7 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
      * @param key
      * @return
      */
-    private BinaryTreeNode<Object> search(BinaryTreeNode<Object> p, Object key) {
+    private N search(N p, E key) {
         if (p == null) {
             return p;
         }
@@ -203,28 +203,28 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
             return p;
         }
 
-        BinaryTreeNode<Object> findP = this.search(p.getLchild(), key);
+        N findP = this.search((N) p.getLchild(), key);
         if (findP == null) {
-            return this.search(p.getRchild(), key);
+            return this.search((N) p.getRchild(), key);
         }
 
         return findP;
     }
 
     @Override
-    public void insertRoot(Object t) {
-        this.root = new BinaryTreeNode<>(t);
+    public void insertRoot(E t) {
+        this.root = (N) new BinaryTreeNode(t);
     }
 
     @Override
-    public BinaryTreeNode<Object> insertChild(BinaryTreeNode<Object> p, Object t, boolean lchild) {
+    public N insertChild(N p, E t, boolean lchild) {
         if (p != null) {
             if (lchild) {
                 p.setLchild(new BinaryTreeNode<>(t, null, null));
-                return p.getLchild();
+                return (N) p.getLchild();
             } else {
                 p.setRchild(new BinaryTreeNode<>(t, null, null));
-                return p.getRchild();
+                return (N) p.getRchild();
             }
         }
 
@@ -232,7 +232,7 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
     }
 
     @Override
-    public void removeChild(BinaryTreeNode<Object> p, boolean lchild) {
+    public void removeChild(N p, boolean lchild) {
         if (p != null) {
             if (lchild) {
                 p.setLchild(null);
@@ -244,14 +244,14 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Ob
 
     @Override
     public void removeAll() {
-        this.removeAll(this.root);
+        this.removeAll();
     }
 
     /**
      * 递归清空二叉树
      * @param node
      */
-    private void removeAll(BinaryTreeNode<Object> node) {
+    private void removeAll(N node) {
         if (node != null) {
             node.setLchild(null);
             node.setRchild(null);

@@ -1,19 +1,19 @@
 package com.jiangls.tree;
 
 /**
- * 二叉树类型，带有泛型
+ * 二叉树链式存储实现类型，类定义的时候就确定了类型，不再用泛型定义
  *
  * @author Jiangls
  * @date 2022/1/3
  */
-public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements AbstractBinaryTree<T, E> {
+public class LinkedBinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Object> {
 
-    private T root;
+    private BinaryTreeNode<Object> root;
 
     /**
      * 构造空二叉树
      */
-    public BinaryTreeGeneric() {
+    public LinkedBinaryTree() {
         this.root = null;
     }
 
@@ -21,19 +21,19 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
      * 构造只有根结点的二叉树
      * @param rootData
      */
-    public BinaryTreeGeneric(E rootData) {
+    public LinkedBinaryTree(Object rootData) {
         this(rootData, null, null);
     }
 
-    public BinaryTreeGeneric(E rootData, T lchild, T rchild) {
-        this.root = (T) new BinaryTreeNode(rootData, lchild, rchild);
+    public LinkedBinaryTree(Object rootData, BinaryTreeNode<Object> lchild, BinaryTreeNode<Object> rchild) {
+        this.root = new BinaryTreeNode(rootData, lchild, rchild);
     }
 
-    public T getRoot() {
+    public BinaryTreeNode<Object> getRoot() {
         return root;
     }
 
-    public void setRoot(T root) {
+    public void setRoot(BinaryTreeNode<Object> root) {
         this.root = root;
     }
 
@@ -44,7 +44,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
 
     @Override
     public int count() {
-        return this.count(this.root);
+        return 0;
     }
 
     /**
@@ -52,15 +52,15 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
      * @param node
      * @return
      */
-    private int count(T node) {
+    private int count(BinaryTreeNode<Object> node) {
         // 递归边界
         if (node == null) {
             return 0;
         }
 
         // 递推公式
-        int lcount = this.count((T) node.getLchild());
-        int rcount = this.count((T) node.getRchild());
+        int lcount = this.count(node.getLchild());
+        int rcount = this.count(node.getRchild());
         return 1 + lcount + rcount;
 
     }
@@ -75,15 +75,15 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
      * @param node
      * @return
      */
-    private int height(T node) {
+    private int height(BinaryTreeNode<Object> node) {
         // 递归边界
         if (node == null) {
             return 0;
         }
 
         // 递推公式
-        int lheight = this.height((T) node.getLchild());
-        int rheight = this.height((T) node.getRchild());
+        int lheight = this.height(node.getLchild());
+        int rheight = this.height(node.getRchild());
 
         return lheight > rheight ? 1 + lheight : 1 + rheight;
     }
@@ -97,11 +97,11 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
      * 递归前序遍历
      * @param node
      */
-    private void preOrder(T node) {
+    private void preOrder(BinaryTreeNode<Object> node) {
         if (node != null) {
             System.out.print(node.getData().toString() + " ");
-            this.preOrder((T) node.getLchild());
-            this.preOrder((T) node.getRchild());
+            this.preOrder(node.getLchild());
+            this.preOrder(node.getRchild());
         }
     }
 
@@ -114,11 +114,11 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
      * 递归中序遍历
      * @param node
      */
-    private void inOrder(T node) {
+    private void inOrder(BinaryTreeNode<Object> node) {
         if (node != null) {
-            this.inOrder((T) node.getLchild());
+            this.inOrder(node.getLchild());
             System.out.print(node.getData().toString() + " ");
-            this.inOrder((T) node.getRchild());
+            this.inOrder(node.getRchild());
         }
     }
 
@@ -131,16 +131,16 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
      * 递归后序遍历
      * @param node
      */
-    private void postOrder(T node) {
+    private void postOrder(BinaryTreeNode<Object> node) {
         if (node != null) {
-            this.inOrder((T) node.getLchild());
-            this.inOrder((T) node.getRchild());
+            this.inOrder(node.getLchild());
+            this.inOrder(node.getRchild());
             System.out.print(node.getData().toString() + " ");
         }
     }
 
     @Override
-    public T getParent(T node) {
+    public BinaryTreeNode<Object> getParent(BinaryTreeNode<Object> node) {
         if (this.root == null || node == null || node == this.root) {
             return null;
         }
@@ -154,7 +154,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
      * @param node
      * @return
      */
-    private T getParent(T p, T node) {
+    private BinaryTreeNode<Object> getParent(BinaryTreeNode<Object> p, BinaryTreeNode<Object> node) {
         if (p == null || node == null) {
             return null;
         }
@@ -163,26 +163,26 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
             return p;
         }
 
-        BinaryTreeNode<E> findP = this.getParent((T) p.getLchild(), node);
+        BinaryTreeNode<Object> findP = this.getParent(p.getLchild(), node);
         if (findP == null) {
-            return this.getParent((T) p.getRchild(), node);
+            return this.getParent(p.getRchild(), node);
         }
 
-        return (T) findP;
+        return findP;
     }
 
     @Override
-    public T getLeft(T node) {
-        return (T) node.getLchild();
+    public BinaryTreeNode<Object> getLeft(BinaryTreeNode<Object> node) {
+        return node.getLchild();
     }
 
     @Override
-    public T getRight(T node) {
-        return (T) node.getRchild();
+    public BinaryTreeNode<Object> getRight(BinaryTreeNode<Object> node) {
+        return node.getRchild();
     }
 
     @Override
-    public T search(E key) {
+    public BinaryTreeNode<Object> search(Object key) {
         return this.search(this.root, key);
     }
 
@@ -194,7 +194,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
      * @param key
      * @return
      */
-    private T search(T p, E key) {
+    private BinaryTreeNode<Object> search(BinaryTreeNode<Object> p, Object key) {
         if (p == null) {
             return p;
         }
@@ -203,28 +203,28 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
             return p;
         }
 
-        T findP = this.search((T) p.getLchild(), key);
+        BinaryTreeNode<Object> findP = this.search(p.getLchild(), key);
         if (findP == null) {
-            return this.search((T) p.getRchild(), key);
+            return this.search(p.getRchild(), key);
         }
 
         return findP;
     }
 
     @Override
-    public void insertRoot(E t) {
-        this.root = (T) new BinaryTreeNode(t);
+    public void insertRoot(Object t) {
+        this.root = new BinaryTreeNode<>(t);
     }
 
     @Override
-    public T insertChild(T p, E t, boolean lchild) {
+    public BinaryTreeNode<Object> insertChild(BinaryTreeNode<Object> p, Object t, boolean lchild) {
         if (p != null) {
             if (lchild) {
                 p.setLchild(new BinaryTreeNode<>(t, null, null));
-                return (T) p.getLchild();
+                return p.getLchild();
             } else {
                 p.setRchild(new BinaryTreeNode<>(t, null, null));
-                return (T) p.getRchild();
+                return p.getRchild();
             }
         }
 
@@ -232,7 +232,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
     }
 
     @Override
-    public void removeChild(T p, boolean lchild) {
+    public void removeChild(BinaryTreeNode<Object> p, boolean lchild) {
         if (p != null) {
             if (lchild) {
                 p.setLchild(null);
@@ -244,14 +244,14 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
 
     @Override
     public void removeAll() {
-        this.removeAll();
+        this.removeAll(this.root);
     }
 
     /**
      * 递归清空二叉树
      * @param node
      */
-    private void removeAll(T node) {
+    private void removeAll(BinaryTreeNode<Object> node) {
         if (node != null) {
             node.setLchild(null);
             node.setRchild(null);
