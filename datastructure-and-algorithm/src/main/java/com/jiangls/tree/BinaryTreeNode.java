@@ -5,46 +5,46 @@ package com.jiangls.tree;
  * @Author jiangls
  * @Date 2021/10/20
  */
-public class BinaryNode<T> {
-    private T data;
+public class BinaryTreeNode<E> {
+    private E data;
 
-    private BinaryNode<T> lchild,rchild;
+    private BinaryTreeNode<E> lchild,rchild;
 
-    public BinaryNode() {
+    public BinaryTreeNode() {
         this(null, null, null);
     }
 
-    public BinaryNode(T data) {
+    public BinaryTreeNode(E data) {
         this(data, null, null);
     }
 
-    public BinaryNode(T data, BinaryNode<T> lchild, BinaryNode<T> rchild) {
+    public BinaryTreeNode(E data, BinaryTreeNode<E> lchild, BinaryTreeNode<E> rchild) {
         this.data = data;
         this.lchild = lchild;
         this.rchild = rchild;
     }
 
-    public T getData() {
+    public E getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(E data) {
         this.data = data;
     }
 
-    public BinaryNode<T> getLchild() {
+    public BinaryTreeNode<E> getLchild() {
         return lchild;
     }
 
-    public void setLchild(BinaryNode<T> lchild) {
+    public void setLchild(BinaryTreeNode<E> lchild) {
         this.lchild = lchild;
     }
 
-    public BinaryNode<T> getRchild() {
+    public BinaryTreeNode<E> getRchild() {
         return rchild;
     }
 
-    public void setRchild(BinaryNode<T> rchild) {
+    public void setRchild(BinaryTreeNode<E> rchild) {
         this.rchild = rchild;
     }
 }
