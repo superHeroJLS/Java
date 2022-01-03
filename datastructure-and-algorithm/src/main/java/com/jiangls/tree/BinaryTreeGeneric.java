@@ -39,7 +39,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.root == null;
     }
 
     @Override
