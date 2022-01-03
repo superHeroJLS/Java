@@ -163,12 +163,12 @@ public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements 
             return p;
         }
 
-        BinaryTreeNode<E> findP = this.getParent((N) p.getLchild(), node);
+        N findP = this.getParent((N) p.getLchild(), node);
         if (findP == null) {
             return this.getParent((N) p.getRchild(), node);
         }
 
-        return (N) findP;
+        return findP;
     }
 
     @Override
