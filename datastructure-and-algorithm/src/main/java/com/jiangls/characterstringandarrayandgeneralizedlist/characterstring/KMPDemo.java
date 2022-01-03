@@ -4,12 +4,16 @@ package com.jiangls.characterstringandarrayandgeneralizedlist.characterstring;
  * <p>KMP算法demo，KMP算法是一种无回溯的的模式匹配算法，目标串不回溯，改进了Brute-Force算法</p>
  * <p>Knuth-Morris-Pratt算法（简称KMP）是最常用的之一。它以三个发明者命名，起头的那个K就是著名科学家Donald Knuth</p>
  *
- * <p>参考：<a href=https://www.cnblogs.com/yjiyjige/p/3263858.html>https://www.cnblogs.com/yjiyjige/p/3263858.html</a></p>
+ * <p>参考：<a href=https://blog.csdn.net/yyzsir/article/details/89462339>https://blog.csdn.net/yyzsir/article/details/89462339</a></p>
  * @Author jiangls
  * @Date 2021/10/19
  */
 public class KMPDemo {
     public static void main(String[] args) {
+        String target = "abcdabdabbabcabc";
+        String pattern = "abcabc";
+
+        System.out.println(indexOf(target, pattern, 0));
 
     }
 

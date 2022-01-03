@@ -14,3 +14,5 @@
 Knuth-Morris-Pratt算法（KMP）以三个发明者命名，起头的那个K就是著名科学家Donald Knuth
 
 参考：https://www.icourse163.org/learn/ZZU-1207193805?tid=1461941470#/learn/content?type=detail&id=1238766413&cid=1259545397
+
+**KMP算法详解，参考次文章理解KMP算法**：https://blog.csdn.net/yyzsir/article/details/89462339
