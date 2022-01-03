@@ -5,7 +5,7 @@ package com.jiangls.tree;
  * @Author jiangls
  * @Date 2021/10/20
  */
-public interface AbstractBinaryTree<T extends BinaryTreeNode<Object>> {
+public interface AbstractBinaryTree<T extends BinaryTreeNode<E>, E> {
     boolean isEmpty();
 
     /**
@@ -56,12 +56,12 @@ public interface AbstractBinaryTree<T extends BinaryTreeNode<Object>> {
     /**
      * 查找并返回首次出现的关键字key元素结点
      */
-    T search(Object key);
+    T search(E key);
 
     /**
      * 插入根结点
      */
-    void insertRoot(Object t);
+    void insertRoot(E t);
 
     /**
      * 插入子结点
@@ -70,7 +70,7 @@ public interface AbstractBinaryTree<T extends BinaryTreeNode<Object>> {
      * @param lchild
      * @return
      */
-    T insertChild(T p, Object t, boolean lchild);
+    T insertChild(T p, E t, boolean lchild);
 
     /**
      * 删除子结点

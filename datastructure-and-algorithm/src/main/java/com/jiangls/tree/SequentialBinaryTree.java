@@ -7,7 +7,7 @@ package com.jiangls.tree;
  * @author Jiangls
  * @date 2022/1/3
  */
-public class SequentialBinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>>{
+public class SequentialBinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Object>{
 
     @Override
     public boolean isEmpty() {

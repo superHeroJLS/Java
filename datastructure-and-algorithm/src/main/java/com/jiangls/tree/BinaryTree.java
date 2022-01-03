@@ -1,10 +1,12 @@
 package com.jiangls.tree;
 
 /**
+ * 二叉树类型，类定义的时候就确定了类型，不再用泛型定义
+ *
  * @author Jiangls
  * @date 2022/1/3
  */
-public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>> {
+public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Object> {
 
     private BinaryTreeNode<Object> root;
 
@@ -181,7 +183,7 @@ public class BinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>> {
 
     @Override
     public BinaryTreeNode<Object> search(Object key) {
-        return null;
+        return this.search(this.root, key);
     }
 
     /**
