@@ -8,7 +8,7 @@ package com.jiangls.tree;
  */
 public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements AbstractBinaryTree<T, E> {
 
-    private BinaryTreeNode<E> root;
+    private T root;
 
     /**
      * 构造空二叉树
@@ -26,11 +26,11 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
     }
 
     public BinaryTreeGeneric(E rootData, T lchild, T rchild) {
-        this.root = new BinaryTreeNode(rootData, lchild, rchild);
+        this.root = (T) new BinaryTreeNode(rootData, lchild, rchild);
     }
 
     public T getRoot() {
-        return (T) root;
+        return root;
     }
 
     public void setRoot(T root) {
@@ -44,7 +44,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
 
     @Override
     public int count() {
-        return this.count((T) this.root);
+        return this.count(this.root);
     }
 
     /**
@@ -67,7 +67,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
 
     @Override
     public int height() {
-        return this.height((T) this.root);
+        return this.height(this.root);
     }
 
     /**
@@ -90,7 +90,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
 
     @Override
     public void preOrder() {
-        this.preOrder((T) this.root);
+        this.preOrder(this.root);
     }
 
     /**
@@ -107,7 +107,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
 
     @Override
     public void inOrder() {
-        this.inOrder((T) this.root);
+        this.inOrder(this.root);
     }
 
     /**
@@ -124,7 +124,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
 
     @Override
     public void postOrder() {
-        this.postOrder((T) this.root);
+        this.postOrder(this.root);
     }
 
     /**
@@ -144,7 +144,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
         if (this.root == null || node == null || node == this.root) {
             return null;
         }
-        return this.getParent((T) this.root, node);
+        return this.getParent(this.root, node);
     }
 
     /**
@@ -183,7 +183,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
 
     @Override
     public T search(E key) {
-        return this.search((T) this.root, key);
+        return this.search(this.root, key);
     }
 
     /**
@@ -213,7 +213,7 @@ public class BinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements Abstra
 
     @Override
     public void insertRoot(E t) {
-        this.root = new BinaryTreeNode<>(t);
+        this.root = (T) new BinaryTreeNode(t);
     }
 
     @Override
