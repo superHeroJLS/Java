@@ -12,13 +12,19 @@ public class Main {
         /*
             测试对数的换地公式：https://baike.baidu.com/item/%E6%8D%A2%E5%BA%95%E5%85%AC%E5%BC%8F/6731201?fr=aladdin
          */
-        System.out.println(Math.log(7) / Math.log(2));
-        System.out.println(Double.valueOf(Math.log(7) / Math.log(2)).intValue());
+//        System.out.println(Math.log(7) / Math.log(2));
+//        System.out.println(Double.valueOf(Math.log(7) / Math.log(2)).intValue());
 
 
-        // 测试BinaryTreeGeneric的泛型是否合适
-//        LinkedBinaryTreeGeneric<BinaryTreeNode<String>, String> bt = new LinkedBinaryTreeGeneric<>();
-//        bt.setRoot(new BinaryTreeNode<>("root"));
+        /*
+            测试LinkedBinaryTreeGeneric的泛型是否合适，测试过木有问题
+         */
+//        LinkedBinaryTreeGeneric<BinaryTreeNode<String>, String> bt =
+//                new LinkedBinaryTreeGeneric<>("root", new BinaryTreeNode<>("left"), new BinaryTreeNode<>("right"));
+//
+//        bt.preOrder();
+//        bt.inOrder();
+//        bt.postOrder();
 //
 //        System.out.println(bt.height());
     }
