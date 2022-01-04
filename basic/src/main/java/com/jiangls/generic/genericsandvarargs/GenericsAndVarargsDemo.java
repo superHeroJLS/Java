@@ -12,11 +12,12 @@ public class GenericsAndVarargsDemo {
      * 直接调用asArray(T...)似乎没有问题，但是在另一个方法中，我们返回一个泛型数组就会产生ClassCastException，
      * 原因还是因为擦拭法，在pickTwo()方法内部，编译器无法检测K[]的准确类型，因此返回了Object[]。
      *
-     * 建议可以看看GenericsAndVarargsDemo.class反编译出来的代码：
-     * 27行反编译结果，发现会有一个强制向下转型：String[] arr = (String[])asArray("one", "two", "three");
-     * 30行反编译结果，发现会有一个强制向下转型：String[] firstTwo = (String[])pickTwo("one", "two", "three");
+     * 问题的根源：可变参数的方法，实际接收的是一个数组，所以调用可变参数的方法时，会把参数封装成一个数组。
+     * 如果在泛型方法里，调用泛型可变参数的方法，那么入参会被擦拭成Object数组。即在pickTwo()方法中K会被擦拭成Object类型。
      *
-     * 如果仔细观察，可以发现编译器对所有可变泛型参数都会发出警告，除非确认完全没有问题，才可以用@SafeVarargs消除警告。
+     * 建议可以看看GenericsAndVarargsDemo.class反编译出来的代码：
+     * 31行反编译结果，发现会有一个强制向下转型：String[] arr = (String[])asArray("one", "two", "three");
+     * 33行反编译结果，发现会有一个强制向下转型：String[] firstTwo = (String[])pickTwo("one", "two", "three");
      *
      * 更详细的解释请参考《Effective Java》“Item 32: Combine generics and varargs judiciously”。
      *
