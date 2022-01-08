@@ -1,11 +1,13 @@
 package com.jiangls.tree;
 
+
 /**
- * 二叉树链式存储实现类型，类定义的时候就确定了类型，不再用泛型定义
+ * 二叉树链式存储实现类型，类定义的时候就确定了类型，不再用泛型定义，这个类不再使用，请使用{@link LinkedBinaryTreeGeneric}
  *
  * @author Jiangls
  * @date 2022/1/3
  */
+@Deprecated
 public class LinkedBinaryTree implements AbstractBinaryTree<BinaryTreeNode<Object>, Object> {
 
     private BinaryTreeNode<Object> root;
