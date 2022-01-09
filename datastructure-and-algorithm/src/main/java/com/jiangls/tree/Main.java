@@ -10,16 +10,38 @@ public class Main {
     public static void main(String[] args) {
 
         /*
+            测试使用二叉树工具类BinaryTrees通过中序遍历和后序遍历构造二叉树
+         */
+//        String[] inOrder = {"3", "1", "4", "0", "5", "2", "6"};
+//        String[] postOrder = {"3", "4", "1", "5", "6", "2", "0"};
+//        BinaryTreeNode<String> bt = BinaryTrees.constructBinaryTreeByInOrderAndPostOrder(inOrder, postOrder);
+//        System.out.println("----------校验通过中序遍历和后序遍历构造出的二叉树准确性----------");
+//        BinaryTrees.inOrder(bt);
+//        System.out.println();
+//        BinaryTrees.postOrder(bt);
+
+        /*
+            测试使用二叉树工具类BinaryTrees通过前序遍历和中序遍历构造二叉树
+         */
+        String[] preOrder = {"0", "1", "3", "4", "2", "5", "6"};
+        String[] inOrder = {"3", "1", "4", "0", "5", "2", "6"};
+        BinaryTreeNode<String> bt = BinaryTrees.constructBinaryTreeByPreOrderAndInOrder(preOrder, inOrder);
+        System.out.println("----------校验通过前序遍历和中序遍历构造出的二叉树准确性----------");
+        BinaryTrees.inOrder(bt);
+        System.out.println();
+        BinaryTrees.postOrder(bt);
+
+        /*
             测试通过中序遍历和后序遍历构造二叉树
          */
-        LinkedBinaryTreeGeneric<BinaryTreeNode<String>, String> bt = new LinkedBinaryTreeGeneric<>();
-        String[] inOrder = {"3", "1", "4", "0", "5", "2", "6"};
-        String[] postOrder = {"3", "4", "1", "5", "6", "2", "0"};
-        bt.constructBinaryTreeByInOrderAndPostOrder(inOrder, postOrder);
-        System.out.println("----------校验通过中序遍历和后序遍历构造出的二叉树准确性----------");
-        bt.inOrder();
-        System.out.println();
-        bt.postOrder();
+//        LinkedBinaryTreeGeneric<BinaryTreeNode<String>, String> bt = new LinkedBinaryTreeGeneric<>();
+//        String[] inOrder = {"3", "1", "4", "0", "5", "2", "6"};
+//        String[] postOrder = {"3", "4", "1", "5", "6", "2", "0"};
+//        bt.constructBinaryTreeByInOrderAndPostOrder(inOrder, postOrder);
+//        System.out.println("----------校验通过中序遍历和后序遍历构造出的二叉树准确性----------");
+//        bt.inOrder();
+//        System.out.println();
+//        bt.postOrder();
 
 
         /*
