@@ -15,9 +15,8 @@ public class Main {
         LinkedBinaryTreeGeneric<BinaryTreeNode<String>, String> bt = new LinkedBinaryTreeGeneric<>();
         String[] inOrder = {"3", "1", "4", "0", "5", "2", "6"};
         String[] postOrder = {"3", "4", "1", "5", "6", "2", "0"};
-        BinaryTreeNode<String> btRoot = bt.constructBinaryTreeByInOrderAndPostOrder(inOrder, postOrder);
+        bt.constructBinaryTreeByInOrderAndPostOrder(inOrder, postOrder);
         System.out.println("----------校验通过中序遍历和后序遍历构造出的二叉树准确性----------");
-        bt.setRoot(btRoot);
         bt.inOrder();
         System.out.println();
         bt.postOrder();
@@ -29,9 +28,8 @@ public class Main {
 //        LinkedBinaryTreeGeneric<BinaryTreeNode<String>, String> bt = new LinkedBinaryTreeGeneric<>();
 //        String[] preOrder = {"0", "1", "3", "4", "2", "5", "6"};
 //        String[] inOrder = {"3", "1", "4", "0", "5", "2", "6"};
-//        BinaryTreeNode<String> btRoot = bt.constructBinaryTreeByPreOrderAndInOrder(preOrder, inOrder);
+//        bt.constructBinaryTreeByPreOrderAndInOrder(preOrder, inOrder);
 //        System.out.println("----------校验通过前序遍历和中序遍历构造出的二叉树准确性----------");
-//        bt.setRoot(btRoot);
 //        bt.preOrder();
 //        System.out.println();
 //        bt.inOrder();

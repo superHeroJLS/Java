@@ -271,9 +271,9 @@ public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements 
      * @param inOrder
      * @return
      */
-    public N constructBinaryTreeByPreOrderAndInOrder(E[] preOrder, E[] inOrder) {
+    public void constructBinaryTreeByPreOrderAndInOrder(E[] preOrder, E[] inOrder) {
         if (preOrder == null || inOrder == null || preOrder.length == 0) {
-            return null;
+            return;
         }
         if (preOrder.length != inOrder.length){
             throw new RuntimeException("前序遍历和中序遍历长度不相同");
@@ -293,6 +293,8 @@ public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements 
         }
 
         N root = (N) new BinaryTreeNode<E>(rootData);
+        // 设置根节点
+        this.root = root;
 
         // 截取左子树的preOrder和inOrder，构造左子树
         E[] lpreOrder = Arrays.copyOfRange(preOrder, 1, rootDataIdxInInOrder + 1);
@@ -303,8 +305,6 @@ public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements 
         E[] rpreOrder = Arrays.copyOfRange(preOrder, rootDataIdxInInOrder + 1, inOrder.length);
         E[] rinOrder = Arrays.copyOfRange(inOrder, rootDataIdxInInOrder + 1, inOrder.length);
         constructBinaryTreeByPreOrderAndInOrder(root, rpreOrder, rinOrder, false);
-
-        return root;
     }
 
     /**
@@ -369,9 +369,9 @@ public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements 
      * @param postOrder
      * @return
      */
-    public N constructBinaryTreeByInOrderAndPostOrder(E[] inOrder, E[] postOrder) {
+    public void constructBinaryTreeByInOrderAndPostOrder(E[] inOrder, E[] postOrder) {
         if (inOrder == null || postOrder == null || inOrder.length == 0) {
-            return null;
+            return;
         }
         if (inOrder.length != postOrder.length){
             throw new RuntimeException("中序遍历和后序遍历长度不相同");
@@ -391,6 +391,8 @@ public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements 
         }
 
         N root = (N) new BinaryTreeNode<E>(rootData);
+        // 设置根节点
+        this.root = root;
 
         // 截取左子树的inOrder和postOrder，构造左子树
         E[] linOrder = Arrays.copyOfRange(inOrder, 0, rootDataIdxInInOrder);
@@ -401,8 +403,6 @@ public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements 
         E[] rinOrder = Arrays.copyOfRange(inOrder, rootDataIdxInInOrder + 1, inOrder.length);
         E[] rpostOrder = Arrays.copyOfRange(postOrder, rootDataIdxInInOrder, postOrder.length - 1);
         constructBinaryTreeByInOrderAndPostOrder(root, rinOrder, rpostOrder, false);
-
-        return root;
     }
 
     /**
