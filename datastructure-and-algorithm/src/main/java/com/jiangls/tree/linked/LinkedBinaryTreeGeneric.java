@@ -1,4 +1,7 @@
-package com.jiangls.tree;
+package com.jiangls.tree.linked;
+
+import com.jiangls.tree.AbstractBinaryTree;
+import com.jiangls.tree.BinaryTreeNode;
 
 import java.util.Arrays;
 
@@ -88,6 +91,26 @@ public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements 
         int rheight = this.height((N) node.getRchild());
 
         return lheight > rheight ? 1 + lheight : 1 + rheight;
+    }
+
+    /**
+     * 根据先序遍历构造二叉树，二叉树中的空子树以null表示，例如：0, 1, 3, null, null, 4, null, null, 2, 5, null, null, 6, null, null <br>
+     * 实际构造出来的二叉树，通过前序遍历打印（不打印null）出来的顺序也为为：0, 1, 3, 2, 5, 6
+     * @param preOrder
+     */
+    private int idxPreOrder = 0;
+    public N constructByPreOrder(E[] preOrder) {
+        N node = null;
+        if (idxPreOrder < preOrder.length) {
+            E nodeData = preOrder[idxPreOrder++];
+            if (nodeData != null) {
+                node = (N) new BinaryTreeNode<E>(nodeData);
+                node.setLchild(this.constructByPreOrder(preOrder));
+                node.setRchild(this.constructByPreOrder(preOrder));
+            }
+        }
+
+        return node;
     }
 
     @Override

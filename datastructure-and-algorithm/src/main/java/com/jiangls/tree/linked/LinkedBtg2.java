@@ -1,12 +1,15 @@
-package com.jiangls.tree;
+package com.jiangls.tree.linked;
+
+import com.jiangls.tree.AbstractBt2;
+import com.jiangls.tree.BinaryTreeNode;
 
 /**
- * 重新定义SequentialBinaryTreeGeneric类
+ * 重新定义的LinkedBinaryTreeGeneric类
+ *
  * @author Jiangls
  * @date 2022/1/3
  */
-public class SequentialBtg2<N> implements AbstractBt2<N>{
-
+public class LinkedBtg2<N extends BinaryTreeNode<E>,E> implements AbstractBt2<N> {
     @Override
     public boolean isEmpty() {
         return false;

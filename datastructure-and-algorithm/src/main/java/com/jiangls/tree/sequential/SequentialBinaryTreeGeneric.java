@@ -1,4 +1,7 @@
-package com.jiangls.tree;
+package com.jiangls.tree.sequential;
+
+import com.jiangls.tree.AbstractBinaryTree;
+import com.jiangls.tree.BinaryTreeNode;
 
 /**
  * 顺序存储实现<b>完全二叉树</b>，使用数组存储<b>完全二叉树</b>所有节点，存储单元依次自上而下、自左而右存储<b>完全二叉树</b>上的节点元素<br>
@@ -7,7 +10,7 @@ package com.jiangls.tree;
  * @author Jiangls
  * @date 2022/1/3
  */
-public class SequentialBinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements AbstractBinaryTree<T, E>{
+public class SequentialBinaryTreeGeneric<T extends BinaryTreeNode<E>, E> implements AbstractBinaryTree<T, E> {
 
     private T[] nodes;
     private int capacity = 8;

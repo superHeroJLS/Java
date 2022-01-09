@@ -1,5 +1,8 @@
-package com.jiangls.tree;
+package com.jiangls.tree.linked;
 
+
+import com.jiangls.tree.AbstractBinaryTree;
+import com.jiangls.tree.BinaryTreeNode;
 
 /**
  * 二叉树链式存储实现类型，类定义的时候就确定了类型，不再用泛型定义，这个类不再使用，请使用{@link LinkedBinaryTreeGeneric}
