@@ -37,7 +37,6 @@ public class BinaryTrees {
         }
         return root;
     }
-
     private static <N extends BinaryTreeNode<E>, E> int constructByPreOrder(N parent, E[] preOrder, int idxPreOrder, boolean isLeft) {
         if (idxPreOrder < preOrder.length) {
             E nodeData = preOrder[idxPreOrder++];
@@ -55,7 +54,49 @@ public class BinaryTrees {
         return idxPreOrder;
     }
 
-
+    /**
+     * 根据<b>后序遍历</b>构造二叉树，二叉树中的<b>空子树以null</b>表示，例如：null, null, 3, null, null, 4, 1, null, null, 5, null, null, 6, 2, 0<br>
+     * 实际构造出来的二叉树，通过后序遍历打印（不打印null）出来的顺序也为为：3, 4, 1, 6, 2, 0 <br><br>
+     *
+     * <b>无法通过中序遍历构造二叉树</b>
+     * @param postOrder
+     * @param <N>
+     * @param <E>
+     * @return
+     */
+    public static <N extends BinaryTreeNode<E>, E> N constructByPostOrder(E[] postOrder) {
+        N root = null;
+        int idxPostOrder = postOrder.length - 1;
+        if (idxPostOrder >= 0) {
+            E rootData = postOrder[idxPostOrder--];
+            if (rootData != null) {
+                root = (N) new BinaryTreeNode<E>(rootData);
+                // 构建右子树
+                idxPostOrder = constructByPostOrder(root, postOrder, idxPostOrder, false);
+                // 构建左子树
+                idxPostOrder = constructByPostOrder(root, postOrder, idxPostOrder, true);
+            }
+        }
+        return root;
+    }
+    private static <N extends BinaryTreeNode<E>, E> int constructByPostOrder(N parent, E[] postOrder, int idxPostOrder, boolean isLeft) {
+        if (idxPostOrder >= 0) {
+            E nodeData = postOrder[idxPostOrder--];
+            if (nodeData != null) {
+                N node = (N) new BinaryTreeNode<E>(nodeData);
+                if (isLeft) {
+                    parent.setLchild(node);
+                } else {
+                    parent.setRchild(node);
+                }
+                // 构建右子树
+                idxPostOrder = constructByPostOrder(node, postOrder, idxPostOrder, false);
+                // 构建左子树
+                idxPostOrder = constructByPostOrder(node, postOrder, idxPostOrder, true);
+            }
+        }
+        return idxPostOrder;
+    }
 
     /**
      * 递归前序遍历

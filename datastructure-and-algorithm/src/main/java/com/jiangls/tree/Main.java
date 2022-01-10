@@ -14,6 +14,22 @@ public class Main {
         /*
             测试使用后序遍历构造二叉树，子树为空用null表示，后序遍历为：null, null, 3, null, null, 4, 1, null, null, 5, null, null, 6, 2, 0
          */
+        String[] postOrder = {null, null, "3", null, null, "4", "1", null, null, "5", null, null, "6", "2", "0"};
+        BinaryTreeNode<String> rootNode = BinaryTrees.constructByPostOrder(postOrder);
+        System.out.println("----------通过后序遍历校验二叉树准确性，预期结果：3 4 1 5 6 2 0");
+        BinaryTrees.postOrder(rootNode);
+
+        /*
+            测试使用二叉树工具类BinaryTrees先序遍历构造二叉树，子树为空用null表示，先序遍历为：0, 1, 3, null, null, 4, null, null, 2, 5, null, null, 6, null, null
+         */
+//        String[] preOrder = {"0", "1", "3", null, null, "4", null, null, "2", "5", null, null, "6", null, null};
+//        BinaryTreeNode<String> rootNode = BinaryTrees.constructByPreOrder(preOrder);
+//        System.out.println("----------通过先序遍历校验二叉树准确性，预期结果：0 1 3 4 2 5 6 ");
+//        BinaryTrees.preOrder(rootNode);
+
+        /*
+            测试使用后序遍历构造二叉树，子树为空用null表示，后序遍历为：null, null, 3, null, null, 4, 1, null, null, 5, null, null, 6, 2, 0
+         */
 //        String[] postOrder = {null, null, "3", null, null, "4", "1", null, null, "5", null, null, "6", "2", "0"};
 //        LinkedBinaryTreeGeneric<BinaryTreeNode<String>, String> lbt = new LinkedBinaryTreeGeneric<>();
 //        lbt.setIdxPostOrder(postOrder.length - 1);
