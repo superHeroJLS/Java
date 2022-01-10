@@ -14,6 +14,50 @@ public class BinaryTrees {
     }
 
     /**
+     * 根据<b>先序遍历</b>构造二叉树，二叉树中的<b>空子树以null</b>表示，例如：0, 1, 3, null, null, 4, null, null, 2, 5, null, null, 6, null, null <br>
+     * 实际构造出来的二叉树，通过前序遍历打印（不打印null）出来的顺序也为为：0, 1, 3, 2, 5, 6 <br>
+     *
+     * <b>无法通过中序遍历构造二叉树</b>
+     *
+     * @param preOrder
+     * @param <N>
+     * @param <E>
+     * @return
+     */
+    public static <N extends BinaryTreeNode<E>, E> N constructByPreOrder(E[] preOrder) {
+        N root = null;
+        int idxPreOrder = 0;
+        if (preOrder.length > 0) {
+            E rootData = preOrder[idxPreOrder++];
+            if (rootData != null) {
+                root = (N) new BinaryTreeNode<E>(rootData);
+                idxPreOrder = constructByPreOrder(root, preOrder, idxPreOrder, true);
+                idxPreOrder = constructByPreOrder(root, preOrder, idxPreOrder, false);
+            }
+        }
+        return root;
+    }
+
+    private static <N extends BinaryTreeNode<E>, E> int constructByPreOrder(N parent, E[] preOrder, int idxPreOrder, boolean isLeft) {
+        if (idxPreOrder < preOrder.length) {
+            E nodeData = preOrder[idxPreOrder++];
+            if (nodeData != null) {
+                N node = (N) new BinaryTreeNode<E>(nodeData);
+                if (isLeft) {
+                    parent.setLchild(node);
+                } else {
+                    parent.setRchild(node);
+                }
+                idxPreOrder = constructByPreOrder(node, preOrder, idxPreOrder, true);
+                idxPreOrder = constructByPreOrder(node, preOrder, idxPreOrder, false);
+            }
+        }
+        return idxPreOrder;
+    }
+
+
+
+    /**
      * 递归前序遍历
      * @param node
      */

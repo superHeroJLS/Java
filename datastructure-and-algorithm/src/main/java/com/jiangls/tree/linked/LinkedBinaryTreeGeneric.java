@@ -94,11 +94,14 @@ public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements 
     }
 
     /**
-     * 根据先序遍历构造二叉树，二叉树中的空子树以null表示，例如：0, 1, 3, null, null, 4, null, null, 2, 5, null, null, 6, null, null <br>
-     * 实际构造出来的二叉树，通过前序遍历打印（不打印null）出来的顺序也为为：0, 1, 3, 2, 5, 6
+     * 根据<b>先序遍历</b>构造二叉树，二叉树中的<b>空子树以null</b>表示，例如：0, 1, 3, null, null, 4, null, null, 2, 5, null, null, 6, null, null <br>
+     * 实际构造出来的二叉树，通过前序遍历打印（不打印null）出来的顺序也为为：0, 1, 3, 2, 5, 6 <br>
+     *
+     * <b>无法通过中序遍历构造二叉树</b>
+     *
+     *
      * @param preOrder
      */
-    private int idxPreOrder = 0;
     public N constructByPreOrder(E[] preOrder) {
         N node = null;
         if (idxPreOrder < preOrder.length) {
@@ -109,8 +112,40 @@ public class LinkedBinaryTreeGeneric<N extends BinaryTreeNode<E>, E> implements 
                 node.setRchild(this.constructByPreOrder(preOrder));
             }
         }
-
         return node;
+    }
+    private int idxPreOrder = 0;
+
+    /**
+     * 根据<b>后序遍历</b>构造二叉树，二叉树中的<b>空子树以null</b>表示，例如：null, null, 3, null, null, 4, 1, null, null, 5, null, null, 6, 2, 0<br>
+     * 实际构造出来的二叉树，通过后序遍历打印（不打印null）出来的顺序也为为：3, 4, 1, 6, 2, 0 <br><br>
+     *
+     *  调用constructByPostOrder(postOrder)方法前一定要<b>先调用setIdxPostOrder(idxPostOrder)方法</b>设置后序遍历数组最大的下标<br><br>
+     *
+     *
+     * <b>无法通过中序遍历构造二叉树</b>
+     * @param postOrder
+     * @return
+     */
+    public N constructByPostOrder(E[] postOrder) {
+        N node = null;
+        if (idxPostOrder >= 0) {
+            E nodeData = postOrder[idxPostOrder--];
+            if (nodeData != null) {
+                node = (N) new BinaryTreeNode<E>(nodeData);
+                node.setRchild(this.constructByPostOrder(postOrder));
+                node.setLchild(this.constructByPostOrder(postOrder));
+            }
+        }
+        return node;
+    }
+
+    private int idxPostOrder = 0;
+    public int getIdxPostOrder() {
+        return idxPostOrder;
+    }
+    public void setIdxPostOrder(int idxPostOrder) {
+        this.idxPostOrder = idxPostOrder;
     }
 
     @Override
