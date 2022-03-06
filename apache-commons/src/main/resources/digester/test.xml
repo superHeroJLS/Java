@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<department name="d001" code="d001">
+    <user name="u001" code="u001"></user>
+    <user name="u002" code="u002"></user>
+    <extension>
+        <property-name>director</property-name>
+        <property-value>joker</property-value>
+    </extension>
+
+</department>
