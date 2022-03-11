@@ -7,7 +7,23 @@ package com.jiangls.generic.superwildcard;
  *
  * <p>
  *     <ol>
- *         <li> ? super Integer 这种super通配符只能在方法参数中使用</li>
+ *         <ol>
+ *             一个类中可以使用泛型的地方有3个：
+ *             <li>类定义泛型</li>
+ *             <li>方法返回值类型</li>
+ *             <li>方法参数类型</li>
+ *         </ol>
+ *         <ol>
+ *             extends通配符泛型种类：
+ *                <li>T super Integer</li>
+ *                <li>? super Integer</li>
+ *                <li>? super T</li>
+ *         </ol>
+ *         以上使用泛型的地方和super通配符泛型可以产生9种组合。
+ *     </ol>
+ *     <ol>
+ *         以下简单介绍super通配符泛型常见的使用场景：
+ *         <li> ? super Integer 这种super通配符可以在方法参数中使用</li>
  *     </ol>
  * </p>
  *

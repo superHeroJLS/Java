@@ -7,8 +7,25 @@ package com.jiangls.generic.extendswildcard;
  *
  * <p>
  *     <ol>
- *         <li> ? extends Number 这种extends通配符只能在方法参数中使用</li>
- *         <li> T extends Number 这种extends限定T类型在类定义和方法返回类型中使用</li>
+ *         <ol>
+ *             一个类中可以使用泛型的地方有3个：
+ *             <li>类定义泛型</li>
+ *             <li>方法返回值类型</li>
+ *             <li>方法参数类型</li>
+ *         </ol>
+ *         <ol>
+ *             extends通配符泛型种类：
+ *                <li>T extends Number</li>
+ *                <li>? extends Number</li>
+ *                <li>? extends T</li>
+ *         </ol>
+ *         以上使用泛型的地方和extends通配符泛型可以产生9种组合。
+ *     </ol>
+ *     <ol>
+ *         以下简单介绍extends通配符泛型常见的使用场景：
+ *         <li> ? extends Number 这种 ? extends 通配符能在方法参数中使用，也能在返回类型中使用</li>
+ *         <li> T extends Number 这种 T extends 通配符类型能在在类定义中使用、能在方法返回类型中使用、能在方法参数中使用</li>
+ *         <li> ? extends T 这种通配符一般用在方法参数中，限定 ? 继承的是 T 类型，但是在方法中无法使用 ? 来做一些类型判断</li>
  *     </ol>
  * </p>
  *
