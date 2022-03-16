@@ -15,5 +15,40 @@ public class TypeCast {
     public static void main(String[] args) {
         String str = (String) null;
         System.out.println(str);
+
+        // 自定义类强制向下转型 ，编译通过，运行抛出异常
+        Employee e = new Employee();
+        Manager m = (Manager) e;
+        System.out.println(m.getClass().getName());
+
+        // 这样向下转，编译通过，运行通过。m1本来就是Manager类型，将m1转回去是不会报错的。
+        Employee e1 = new Manager();
+        Manager m1 = (Manager) e1;
+        System.out.println(m1.getClass().getName());
+
+    }
+}
+
+class Employee{
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+class Manager extends Employee {
+    private String code;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
