@@ -17,9 +17,9 @@ public class TypeCast {
         System.out.println(str);
 
         // 自定义类强制向下转型 ，编译通过，运行抛出异常
-        Employee e = new Employee();
-        Manager m = (Manager) e;
-        System.out.println(m.getClass().getName());
+//        Employee e = new Employee();
+//        Manager m = (Manager) e;
+//        System.out.println(m.getClass().getName());
 
         // 可以使用instance关键字做判断，这样可以避免编译通过运行异常
         Employee e2 = new Employee();
@@ -32,6 +32,8 @@ public class TypeCast {
         Employee e1 = new Manager();
         Manager m1 = (Manager) e1;
         System.out.println(m1.getClass().getName());
+        System.out.println("e1 instanceof Employee: " + (e1 instanceof Employee));
+        System.out.println("e1 instanceof Manager: " + (e1 instanceof Manager));
 
     }
 }
