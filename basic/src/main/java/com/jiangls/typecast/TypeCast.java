@@ -21,6 +21,13 @@ public class TypeCast {
         Manager m = (Manager) e;
         System.out.println(m.getClass().getName());
 
+        // 可以使用instance关键字做判断，这样可以避免编译通过运行异常
+        Employee e2 = new Employee();
+        if (e2 instanceof Manager) {
+            Manager m2 = (Manager) e2;
+            System.out.println(m2.getClass().getName());
+        }
+
         // 这样向下转，编译通过，运行通过。m1本来就是Manager类型，将m1转回去是不会报错的。
         Employee e1 = new Manager();
         Manager m1 = (Manager) e1;
