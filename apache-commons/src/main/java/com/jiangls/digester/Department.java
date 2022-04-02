@@ -39,4 +39,14 @@ public class Department {
     public void putExtension(String name, String value) {
         this.extension.put(name, value);
     }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                ", extension=" + extension +
+                ", users=" + users +
+                '}';
+    }
 }

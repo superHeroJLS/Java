@@ -23,4 +23,12 @@ public class User {
     public void setCode(String code) {
         this.code = code;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }
