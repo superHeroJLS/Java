@@ -15,6 +15,7 @@
         <module>json</module>
         <module>maven-demo</module>
         <module>apache-commons</module>
+        <module>tomcat</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
