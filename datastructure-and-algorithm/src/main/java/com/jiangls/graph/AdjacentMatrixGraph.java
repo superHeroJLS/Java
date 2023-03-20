@@ -63,24 +63,31 @@ public class AdjacentMatrixGraph<T> implements Graph<T> {
         this.capacity = capacity;
     }
 
+    public int[][] getMatrix() {
+        return matrix;
+    }
+
     @Override
     public int getNumOfVertices() {
-        return 0;
+        return numOfVertices;
     }
 
     @Override
     public int getNumOfEdges() {
-        return 0;
+        return numOfEdges;
     }
 
     @Override
     public T getValue(int v) throws Exception {
-        return null;
+        return vertices.get(v);
     }
 
     @Override
     public int getWeight(int v1, int v2) throws Exception {
-        return 0;
+        if (v1 < 0 || v1 > capacity || v2 < 0 || v2 > capacity) {
+            throw new RuntimeException("v1或v2越界错误");
+        }
+        return matrix[v1][v2];
     }
 
     @Override
