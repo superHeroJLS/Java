@@ -51,13 +51,15 @@ public interface Graph<T> {
     int getNextNeighbor(int v1, int v2) throws Exception;
 
     /**
-     * 深度优先遍历
+     * 深度优先遍历，Depth-first Search
+     * <br/>https://www.icourse163.org/learn/CCIT-1461552162?tid=1463292527#/learn/content?type=detail&id=1240727499&cid=1262487292
      * @throws Exception
      */
     void DFS() throws Exception;
 
     /**
-     * 广度优先遍历
+     * 广度优先遍历，Breadth-first Search
+     * <br/>https://www.icourse163.org/learn/CCIT-1461552162?tid=1463292527#/learn/content?type=detail&id=1240727499&cid=1262487292
      * @throws Exception
      */
     void BFS() throws Exception;
