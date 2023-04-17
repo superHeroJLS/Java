@@ -77,6 +77,32 @@ public class InsertionSort {
      * @param arr
      */
     public static void shellSort(int[] arr) {
+        // 选择一个增量序列，增量序列中增量个数为k，k就是需要排序的次数。我们选择knuth增量序列，序列中的最大增量要小于等于待排序数组长度
+        int h = 1;
+        while(h <= arr.length / 3) {
+            h = h * 3 + 1;
+        }
+        /**
+         * 每次排序根据增量，将待排序列分割成若干长度为m的子序列，分别对各子序列进行直接插入排序。
+         * 直到增量为1时，整个序列当成1个子序列对待进行直接插入排序
+         */
+        while (h > 0) {
+            // 增量序列中增量个数为k，排序k次
+            for (int i = 0; i < h; i += 1) {
+                for (int j = i + h; j < arr.length; j+=h) {
+                    int tmp = arr[j];
+                    if (arr[j] < arr[j-h]) {
+                        int k = j - h;
+                        while (k >= 0 && tmp < arr[k]) {
+                            arr[k + h] = arr[k];
+                            k -= h;
+                        }
+                        arr[k + h] = tmp;
+                    }
+                }
 
+            }
+            h = (h -1) / 3;
+        }
     }
 }
