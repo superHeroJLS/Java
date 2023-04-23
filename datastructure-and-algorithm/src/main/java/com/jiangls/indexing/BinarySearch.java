@@ -18,7 +18,7 @@ public class BinarySearch {
 
     /**
      * 二分查找循环实现，找到返回下标，否则返回-1
-     * @param arr 必须为线性存储（Arrry或List），且必须从小到大排序
+     * @param arr 必须为线性存储（Array或List），且必须从小到大排序
      * @param key
      * @return
      */
@@ -43,7 +43,7 @@ public class BinarySearch {
 
     /**
      * 二分查找递归实现，找到返回下标，否则返回-1
-     * @param arr 必须为线性存储（Arrry或List），且必须从小到大排序
+     * @param arr 必须为线性存储（Array或List），且必须从小到大排序
      * @param low
      * @param mid
      * @param high
