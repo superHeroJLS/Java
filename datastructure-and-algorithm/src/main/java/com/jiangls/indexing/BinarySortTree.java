@@ -33,7 +33,8 @@ public class BinarySortTree<T> {
 
         // 删除
         System.out.println("-----删除后中序");
-        del(node, 5);
+//        del(node, 5);
+        del(node, null, node, 5);
         // 中序
         inorder(node);
         Thread.sleep(200);
@@ -71,21 +72,11 @@ public class BinarySortTree<T> {
         } else if (key.equals(node.data)) {
             return node;
         } else if (key.compareTo(node.data) > 0) {
-            if (node.rchild == null) {
-                BstNode r = new BstNode(key, null, null);
-                node.rchild = r;
-                return r;
-            } else {
-                return insert(node.rchild, key);
-            }
+            node.rchild = insert(node.rchild, key);
+            return node;
         } else {
-            if (node.lchild == null) {
-                BstNode l = new BstNode(key, null, null);
-                node.lchild = l;
-                return l;
-            } else {
-                return insert(node.lchild, key);
-            }
+            node.lchild = insert(node.lchild, key);
+            return node;
         }
     }
 
@@ -169,6 +160,82 @@ public class BinarySortTree<T> {
         }
 
         return node;
+    }
+
+    /**
+     *
+     * 删除节点，直接在递归操作查找key，删除key。建议使用这种实现。
+     * @param root 根节点
+     * @param parent 父节点
+     * @param node 节点
+     * @param key 关键字
+     * @return
+     */
+    public static BstNode del(BstNode root, BstNode parent, BstNode node, Integer key) {
+        if (node == null) {
+            System.out.println("key: " + key + "在二叉排序树中不存在");
+            return root;
+        } else if (key.equals(node.data)) {
+            if (parent == null) {
+                // node为根节点
+                node = null;
+                return node;
+            } else {
+                // node不为根节点
+
+                // 1 node没有左右子树（叶子节点）
+                if (node.lchild == null && node.rchild == null) {
+                    if (node.equals(parent.lchild)) {
+                        // node为父节点的左子树
+                        parent.lchild = null;
+                    } else {
+                        // node为父节点的右子树
+                        parent.rchild = null;
+                    }
+                } else if (node.lchild != null && node.rchild == null) {
+                    // 2 node只有左子树
+                    if (node.equals(parent.lchild)) {
+                        // node为父节点的左子树
+                        parent.lchild = node.lchild;
+                    } else {
+                        // node为父节点的右子树
+                        parent.rchild = node.lchild;
+                    }
+                } else if (node.lchild == null && node.rchild != null) {
+                    // 3 node只有右子树
+                    if (node.equals(parent.lchild)) {
+                        // node为父节点的左子树
+                        parent.lchild = node.rchild;
+                    } else {
+                        // node为父节点的右子树
+                        parent.rchild = node.rchild;
+                    }
+                } else {
+                    // 4 node有左子树和右子树
+
+                    // node为父节点的左子树或右子树
+
+                    // 找到node右子树最小节点rMinNode，保存rMinNode的关键字rMinkey，删除rMinNode
+                    BstNode rMinParentNode = node;
+                    BstNode rMinNode = node.lchild;
+                    while (rMinNode.lchild != null) {
+                        rMinParentNode = rMinNode;
+                        rMinNode = rMinNode.lchild;
+                    }
+                    int rMinkey = rMinNode.data;
+                    rMinParentNode.lchild = null;
+                    // node关键字赋值为rMinKey即可
+                    node.data = rMinkey;
+                }
+            }
+            return root;
+        } else if (key.compareTo(node.data) > 0) {
+            // 关键字大于当前节点，递归右子树
+            return del(root, node, node.rchild, key);
+        } else {
+            // 递归左子树
+            return del(root, node, node.lchild, key);
+        }
     }
 
     /**

@@ -9,23 +9,130 @@ package com.jiangls.indexing;
 public class BalancedBinarySortTree {
 
     /**
+     * 获取节点高度
+     * @param node 树节点
+     * @return
+     */
+    public static int height(BbstNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return node.height;
+    }
+
+    /**
+     * 获取节点平衡因子
+     * @param node 树节点
+     * @return
+     */
+    public static int balanceFactor(BbstNode node) {
+        if (node == null) {
+            return 0;
+        }
+        return height(node.lchild) - height(node.rchild);
+    }
+
+    /**
+     * 右旋
+     * @param y 待右旋节点
+     * @return
+     */
+    public static BbstNode rotateRight(BbstNode y) {
+        BbstNode x = y.lchild;
+        BbstNode tmp = x.rchild;
+
+        x.rchild = y;
+        y.lchild = tmp;
+
+        y.height = Math.max(height(y.lchild), height(y.rchild)) + 1;
+        x.height = Math.max(height(x.lchild), height(x.rchild)) + 1;
+
+        return x;
+    }
+
+    /**
+     * 左旋
+     * @param x 待左旋节点
+     * @return
+     */
+    public static BbstNode rotateLeft(BbstNode x) {
+        BbstNode y = x.rchild;
+        BbstNode tmp = y.lchild;
+
+        y.lchild = x;
+        x.rchild = tmp;
+
+        x.height = Math.max(height(x.lchild), height(x.rchild)) + 1;
+        y.height = Math.max(height(y.lchild), height(y.rchild)) + 1;
+
+        return y;
+    }
+
+    /**
      * 平衡二叉树在插入结点后，可能变成不平衡需要调整。其调整方法如下：
      *
      * <br>找到离插入结点最近且平衡因子绝对值超过1的祖先结点，以该结点为根的子树称为最小不平衡子树，对该子树进行平衡调整按照其调整规律可归纳为以下四种情况。
      *
      * <ol>
-     *      <li>LL型，新增节点的父节点是左节点，新增节点为左节点：向上重新计算parent节点bf因子，当出现bf > 1的情况时，马上进行LL调整</li>
-     *      <li>RR型，新增节点的父节点是右节点，新增节点为右节点：向上重新计算parent节点bf因子，当出现bf > 1的情况时，马上进行RR调整</li>
-     *      <li>LR型，新增节点的父节点是左节点，新增节点为右节点：向上重新计算parent节点bf因子，当出现bf > 1的情况时，马上进行LR调整</li>
-     *      <li>RL型，新增节点的父节点是右节点，新增节点为左节点：向上重新计算parent节点bf因子，当出现bf > 1的情况时，马上进行RL调整</li>
+     *      <li>LL型</li>
+     *      <li>RR型</li>
+     *      <li>LR型</li>
+     *      <li>RL型</li>
      * </ol>
      * @param node 平衡二叉树根节点
      * @param key
      * @return 返回插入的节点
      */
     public static BbstNode insert(BbstNode node, Integer key) {
+        if (node == null) {
+            return new BbstNode(key, null, null, 1);
+        }
 
-        return null;
+        if (key < node.data) {
+            node.lchild = insert(node.lchild, key);
+        } else if (key > node.data) {
+            node.rchild = insert(node.rchild, key);
+        } else {
+            return node;
+        }
+
+        // 节点高度
+        node.height = 1 + Math.max(height(node.lchild), height(node.rchild));
+
+        // 节点平衡因子
+        int balance = balanceFactor(node);
+
+        // LL型，右旋
+        if (balance > 1 && key < node.lchild.data) {
+            return rotateRight(node);
+        }
+
+        // RR型，左旋
+        if (balance < -1 && key > node.rchild.data) {
+            return rotateLeft(node);
+        }
+
+        // LR型，节点左字树左旋，节点右旋
+        if (balance > 1 && key > node.lchild.data) {
+            node.lchild = rotateLeft(node.lchild);
+            return rotateRight(node);
+        }
+
+        // RL型，节点右字数右旋，节点左旋
+        if (balance < -1 && key < node.rchild.data) {
+            node.rchild = rotateRight(node.rchild);
+            return rotateLeft(node);
+        }
+
+        return node;
+    }
+
+    public static BbstNode minValueNode(BbstNode node) {
+        BbstNode current = node;
+        while (current.lchild != null) {
+            current = current.lchild;
+        }
+        return current;
     }
 
     /**
@@ -34,19 +141,78 @@ public class BalancedBinarySortTree {
      * <br>找到离删除结点最近且平衡因子绝对值超过1的祖先结点，以该结点为根的子树称为最小不平衡子树，对该子树进行平衡调整按照其调整规律可归纳为以下四种情况。
      *
      * <ol>
-     *     删除和插入类似，但不完全一样需要自行画图分析理解一遍：
-     *      <li>LL型，新增节点的父节点是左节点，删除节点为右节点：向上重新计算parent节点bf因子，当出现bf > 1的情况时，马上进行LL调整</li>
-     *      <li>RR型，新增节点的父节点是右节点，删除节点为左节点：向上重新计算parent节点bf因子，当出现bf > 1的情况时，马上进行RR调整</li>
-     *      <li>LR型，新增节点的父节点是左节点，新增节点为左节点：向上重新计算parent节点bf因子，当出现bf > 1的情况时，马上进行LR调整</li>
-     *      <li>RL型，新增节点的父节点是右节点，新增节点为右节点：向上重新计算parent节点bf因子，当出现bf > 1的情况时，马上进行RL调整</li>
+     *     删除和插入类似但是不完全一样
+     *      <li>LL型</li>
+     *      <li>RR型</li>
+     *      <li>LR型</li>
+     *      <li>RL型</li>
      * </ol>
      * @param node 平衡二叉树根节点
      * @param key
      * @return 删除节点后的平衡二叉树根节点
      */
     public static BbstNode del(BbstNode node, Integer key) {
+        if (node == null) {
+            return node;
+        }
 
-        return null;
+        if (key < node.data) {
+            node.lchild = del(node.lchild, key);
+        } else if (key > node.data) {
+            node.rchild = del(node.rchild, key);
+        } else {
+            if ((node.lchild == null) || (node.rchild == null)) {
+                BbstNode temp = null;
+                if (temp == node.lchild) {
+                    temp = node.rchild;
+                } else {
+                    temp = node.lchild;
+                }
+
+                if (temp == null) {
+                    temp = node;
+                    node = null;
+                } else {
+                    node = temp;
+                }
+            } else {
+                BbstNode temp = minValueNode(node.rchild);
+                node.data = temp.data;
+                node.rchild = del(node.rchild, temp.data);
+            }
+        }
+
+        if (node == null) {
+            return node;
+        }
+
+        node.height = Math.max(height(node.lchild), height(node.rchild)) + 1;
+
+        int balance = balanceFactor(node);
+
+        // LL型，右旋
+        if (balance > 1 && balanceFactor(node.lchild) >= 0) {
+            return rotateRight(node);
+        }
+
+        // LR型，节点左子树左旋，节点右旋
+        if (balance > 1 && balanceFactor(node.lchild) < 0) {
+            node.lchild = rotateLeft(node.lchild);
+            return rotateRight(node);
+        }
+
+        // RR型，左旋
+        if (balance < -1 && balanceFactor(node.rchild) <= 0) {
+            return rotateLeft(node);
+        }
+
+        // RL型，节点you右子树右旋，节点左旋
+        if (balance < -1 && balanceFactor(node.rchild) > 0) {
+            node.rchild = rotateRight(node.rchild);
+            return rotateLeft(node);
+        }
+
+        return node;
     }
 
     /**
@@ -102,14 +268,14 @@ class BbstNode {
     public BbstNode lchild;
     public BbstNode rchild;
     /**
-     * 平衡因子，大于1时调整平衡二叉树
+     * 节点树高度
      */
-    public int bf;
+    public int height;
 
-    public BbstNode(Integer data, BbstNode lchild, BbstNode rchild, int bf) {
+    public BbstNode(Integer data, BbstNode lchild, BbstNode rchild, int height) {
         this.data = data;
         this.lchild = lchild;
         this.rchild = rchild;
-        this.bf = bf;
+        this.height = height;
     }
 }
