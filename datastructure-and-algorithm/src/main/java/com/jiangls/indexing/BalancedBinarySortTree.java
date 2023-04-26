@@ -8,6 +8,30 @@ package com.jiangls.indexing;
  */
 public class BalancedBinarySortTree {
 
+    public static void main(String[] args) {
+        // 构造
+        BbstNode node = insert(null, 9);
+        node = insert(node, 8);
+        node = insert(node, 7);
+        node = insert(node, 6);
+        node = insert(node, 5);
+        node = insert(node, 4);
+        node = insert(node, 3);
+        node = insert(node, 2);
+        node = insert(node, 1);
+
+        // 中序
+        inorder(node);
+
+        // 删除
+        del(node, 5);
+
+        // 中序
+        System.out.println("-----删除后中序");
+        inorder(node);
+
+    }
+
     /**
      * 获取节点高度
      * @param node 树节点
@@ -81,7 +105,7 @@ public class BalancedBinarySortTree {
      * </ol>
      * @param node 平衡二叉树根节点
      * @param key
-     * @return 返回插入的节点
+     * @return 新增节点后的二叉树根节点
      */
     public static BbstNode insert(BbstNode node, Integer key) {
         if (node == null) {
@@ -186,6 +210,7 @@ public class BalancedBinarySortTree {
             return node;
         }
 
+        // 节点高度
         node.height = Math.max(height(node.lchild), height(node.rchild)) + 1;
 
         int balance = balanceFactor(node);
@@ -246,7 +271,7 @@ public class BalancedBinarySortTree {
      * 中序遍历平衡二叉树
      * @param node 平衡二叉树根节点
      */
-    public static void inorder(BstNode node) {
+    public static void inorder(BbstNode node) {
         if (node.lchild != null) {
             inorder(node.lchild);
         }
