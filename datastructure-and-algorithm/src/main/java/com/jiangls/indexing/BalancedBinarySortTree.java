@@ -68,6 +68,7 @@ public class BalancedBinarySortTree {
         x.rchild = y;
         y.lchild = tmp;
 
+        // 调整节点高度
         y.height = Math.max(height(y.lchild), height(y.rchild)) + 1;
         x.height = Math.max(height(x.lchild), height(x.rchild)) + 1;
 
@@ -86,6 +87,7 @@ public class BalancedBinarySortTree {
         y.lchild = x;
         x.rchild = tmp;
 
+        // 调整节点高度
         x.height = Math.max(height(x.lchild), height(x.rchild)) + 1;
         y.height = Math.max(height(y.lchild), height(y.rchild)) + 1;
 
@@ -120,7 +122,7 @@ public class BalancedBinarySortTree {
             return node;
         }
 
-        // 节点高度
+        // 调整节点高度
         node.height = 1 + Math.max(height(node.lchild), height(node.rchild));
 
         // 节点平衡因子
@@ -210,7 +212,7 @@ public class BalancedBinarySortTree {
             return node;
         }
 
-        // 节点高度
+        // 调整节点高度
         node.height = Math.max(height(node.lchild), height(node.rchild)) + 1;
 
         int balance = balanceFactor(node);
